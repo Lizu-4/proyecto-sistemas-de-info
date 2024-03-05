@@ -1,0 +1,38 @@
+.div_principal {
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+    background-color: #000A62;
+    color: white;
+
+}
+div p{
+    
+}
+
+.div_inputs{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+.encabezado{
+    text-align: center;
+}
+.div_enlaces{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+.linea_horizontal {
+    background-color: white;
+    border-top: 2px solid;
+  }
+
+
+

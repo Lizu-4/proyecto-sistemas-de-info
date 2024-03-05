@@ -7,4 +7,8 @@ export const routes = [
         path: "/agrupaciones",
         name: "Agrupaciones",
     },
+    {
+        path: "/ingresar",
+        name: "Ingresar",
+    },
 ] as const 
