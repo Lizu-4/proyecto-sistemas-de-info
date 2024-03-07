@@ -4,6 +4,7 @@ import Root from "./layout/Roots.jsx";
 import Agrupaciones from './pages/Agrupaciones'
 import Ingresar from './pages/Ingresar.jsx';
 import { routes } from "./constants/routes";
+import Registrar from "./pages/Registrar.jsx";
 
 
 
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: routes[2].path,
         element: <Ingresar />,
+      },
+      {
+        path: routes[3].path,
+        element: <Registrar />,
       },
     ],
   },

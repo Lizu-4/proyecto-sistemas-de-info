@@ -1,18 +1,50 @@
 import img from '../img/ingresar.jpg';
 import logo from '../img/UNIMET_neg.png';
 import styles from './Ingresar.module.css';
-import { UserContext } from '../context/user';
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useUser } from '../context/user';
+import { loginWithCredentials,iniciarSesionGoogle } from '../controllers/auth';
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export default function Ingresar() {
-    const user = useContext(UserContext);
-    //const setUser = useContext(UserContext);
-    //const user = useUser();
-    //const { user, setUser } = useContext(UserContext);
-    async function iniciarSesionGoogle(){
-        console.log(user.name);
-        //console.log(u);
+    const user = useUser();
+    const [email,setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+
+    function botonIniciarSesion(){
+        //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
+        if( user == null){
+            //esta funcion detecta el cambio de usuario y te lleva a agrupaciones
+            onAuthStateChanged(auth,(user) =>{
+                if(user !== null){
+                    navigate('/agrupaciones');
+                }
+            });
+            //verifica las credenciales y de ser validas, cambiara el estado de user
+            loginWithCredentials(email,password);
+        }else{
+            alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
+        }
+    }
+
+    function botonIniciarSesionGoogle(){
+        //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
+        if( user == null){
+            //esta funcion detecta el cambio de usuario y te lleva a agrupaciones
+            onAuthStateChanged(auth,(user) =>{
+                if(user !== null){
+                    navigate('/agrupaciones');
+                }
+            });
+            //verifica las credenciales y de ser validas, cambiara el estado de user
+            iniciarSesionGoogle();
+        }else{
+            alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
+        }
     }
 
     return (
@@ -28,19 +60,27 @@ export default function Ingresar() {
             </div>
             {/**INPUTS */}
             <div className={styles.div_inputs}>
-                <input type="text" placeholder="Usuario"/>
-                <input type="text" placeholder="Contraseña"/>
+                <input 
+                type="text" 
+                placeholder="Usuario"
+                onChange={(ev) => setEmail(ev.target.value)}
+                />
+                <input 
+                type="text" 
+                placeholder="Contraseña"
+                onChange={(ev) => setPassword(ev.target.value)}
+                />
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
                 <a href="">¿Olvidaste tu contraseña?</a>
-                <button>Iniciar sesion</button>
-                <a href="">Crear Mi Cuenta</a>
+                <button onClick={() => botonIniciarSesion()}>Iniciar sesion</button>
+                <a href="/Registrar">Crear Mi Cuenta</a>
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
             <div>
                 <hr className={styles.linea_horizontal}/>
-                <button onClick={iniciarSesionGoogle}>GOOGLE</button>
+                <button onClick={() => botonIniciarSesionGoogle()}>GOOGLE</button>
                 <button>FACEBOOK</button>
             </div>
         </div>

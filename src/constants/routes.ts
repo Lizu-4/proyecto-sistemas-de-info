@@ -11,4 +11,8 @@ export const routes = [
         path: "/ingresar",
         name: "Ingresar",
     },
+    {
+        path: "/Registrar",
+        name: "Registrar",
+    },
 ] as const 
