@@ -5,7 +5,7 @@ import { UserContext } from '../context/user';
 import { useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection, setDoc, doc,getDoc, query, where,getDocs } from "firebase/firestore";
+import { collection,getDocs } from "firebase/firestore";
 import { db } from '../firebase';
 import { Estudiante } from '../objetos/Estudiante';
 
@@ -23,7 +23,7 @@ export default function UserProvider({ children }) {
         if(users[i]['id'] === user.email){
           const estudiante = new Estudiante(users[i]['name'],users[i]['last_name'],users[i]['id'],users[i]['number']);
           console.log(estudiante.nombre);
-          return estudiante;
+          setUser(estudiante);
         }
       }
   }
@@ -33,10 +33,11 @@ export default function UserProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("sesion iniciada");
+        obtenerEstudiante(user);//esta funcion convertira el estado del user en el objeto estudiante que acaba de iniciar sesion
       } else {
         console.log("sesion cerrada");
+        setUser(user);//el estado del user sera null
       }
-      setUser(user);
     });
   }, []);
   

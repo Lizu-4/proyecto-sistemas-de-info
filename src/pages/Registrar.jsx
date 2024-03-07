@@ -54,7 +54,6 @@ export default function Ingresar() {
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
                 <button onClick={() => registerWithCredentials(email,password,name,last_name,number)}>Crear Cuenta</button>
-                {/* <button onClick={loginWithCredentials(email,password)}>Crear Cuenta</button> */}
                 
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
