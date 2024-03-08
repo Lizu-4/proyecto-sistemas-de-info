@@ -12,8 +12,10 @@ export async function loginWithCredentials(email, password){
       console.error(e);
   }
 }
-
-export async function registerWithCredentials(email, password,nombre,apellido,telefono){
+//Dados esos parametros. este metodo guardara los datos del estudiante en la base de datos de firebase
+//Y tambien en la Autentificacion de firebase
+//si el correo que se coloca ya existe, firebase lo detectara y no lo permitira
+export async function registerWithCredentialsStudent(email, password,name,number){
   try{
     const {user} = await createUserWithEmailAndPassword(
       auth,
@@ -23,10 +25,10 @@ export async function registerWithCredentials(email, password,nombre,apellido,te
     const usersCollection = collection(db,'estudiantes');
     await addDoc(usersCollection,{
         id: email,
-        name: nombre,
-        last_name: apellido,
-        number:telefono,
-        picture: user.photoURL
+        name: name,
+        number:number,
+        picture: user.photoURL,
+        agrupaciones: []
     });
       return user;
   }catch (e){
@@ -35,15 +37,17 @@ export async function registerWithCredentials(email, password,nombre,apellido,te
   }
 }
 
-export async function iniciarSesionGoogle(){
+export async function iniciarSesionGoogleEstudiante(){
     const result = await signInWithPopup(auth,googleProvider);
     const aditionalInfo = getAdditionalUserInfo(result);
     if(aditionalInfo.isNewUser){
-      const usersCollection = collection(db,'users');
+      const usersCollection = collection(db,'estudiantes');
       await addDoc(usersCollection,{
         id:result.user.email,
         name: result.user.displayName,
-        picture: result.user.photoURL
+        number: "",
+        picture: result.user.photoURL,
+        agrupaciones:[]
       });
     }
     return result.user;

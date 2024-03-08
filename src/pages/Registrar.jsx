@@ -2,14 +2,13 @@ import img from '../img/ingresar.jpg';
 import logo from '../img/UNIMET_neg.png';
 import styles from './Ingresar.module.css';
 import { useState } from 'react';
-import { registerWithCredentials } from '../controllers/auth';
+import { registerWithCredentialsStudent } from '../controllers/auth';
 
 
-export default function Ingresar() {
+export default function Registrar() {
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [last_name, setLast_Name] = useState("");
     const [number, setNumber] = useState("");
     
     return (
@@ -37,13 +36,8 @@ export default function Ingresar() {
                 />
                 <input 
                 type="text" 
-                placeholder="Nombre"
+                placeholder="Nombre y Apellido"
                 onChange={(ev) => setName(ev.target.value)}
-                />
-                <input 
-                type="text" 
-                placeholder="Apellido"
-                onChange={(ev) => setLast_Name(ev.target.value)}
                 />
                 <input 
                 type="text" 
@@ -53,7 +47,7 @@ export default function Ingresar() {
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
-                <button onClick={() => registerWithCredentials(email,password,name,last_name,number)}>Crear Cuenta</button>
+                <button onClick={() => registerWithCredentialsStudent(email,password,name,number)}>Crear Cuenta</button>
                 
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}

@@ -14,15 +14,15 @@ import { Estudiante } from '../objetos/Estudiante';
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  //dado un user, este metodo busca el estudiante en la base de datos y te lo retorna convertido en estudiante
+  //dado un user, este metodo busca el estudiante en la base de datos, lo convierte en un objeto estudiante y cambia el estado del user.
   async function obtenerEstudiante(user){
       const usersCollection = collection(db,'estudiantes');
       const usersSnapshot = await getDocs(usersCollection);
       const users = usersSnapshot.docs.map((doc) => doc.data());
       for (let i = 0; i < users.length; i++) {
         if(users[i]['id'] === user.email){
-          const estudiante = new Estudiante(users[i]['name'],users[i]['last_name'],users[i]['id'],users[i]['number']);
-          console.log(estudiante.nombre);
+          const estudiante = new Estudiante(users[i]['name'],users[i]['id'],users[i]['number'],users[i]['picture'],users[i]['agrupaciones']);
+          console.log(estudiante.name );
           setUser(estudiante);
         }
       }

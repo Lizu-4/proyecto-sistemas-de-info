@@ -4,7 +4,7 @@ export default function Home() {
   const user = useUser();
   function mostrarDatos(){
     if(user !== null){
-      alert(user.email);
+      alert(user.name + "\n" + user.email + "\n" + user.number + "\n" + user.picture + "\n" + user.agrupaciones);
     }else{
       alert("no hay sesion iniciada")
     }

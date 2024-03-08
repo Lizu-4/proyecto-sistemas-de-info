@@ -1,8 +1,9 @@
-export function Estudiante(nombre, apellido,email,telefono) {
-    this.nombre = nombre;
-    this.apellido = apellido;
+export function Estudiante(name,email,number,picture,agrupaciones) {
+    this.name = name;
     this.email = email;
-    this.telefono = telefono;
+    this.number = number;
+    this.picture = picture;
+    this.agrupaciones = agrupaciones;
   }
   
 //   var estudiante = new Estudiante("Juan", 20, "Informática", "Universidad XYZ");
