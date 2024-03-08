@@ -3,7 +3,7 @@ import logo from '../img/UNIMET_neg.png';
 import styles from './Ingresar.module.css';
 import { useState } from 'react';
 import { useUser } from '../context/user';
-import { loginWithCredentials,iniciarSesionGoogleEstudiante } from '../controllers/auth';
+import { loginWithCredentials,ingresarGoogleEstudiante } from '../controllers/auth';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -41,7 +41,7 @@ export default function Ingresar() {
                 }
             });
             //verifica las credenciales y de ser validas, cambiara el estado de user
-            iniciarSesionGoogleEstudiante();
+            ingresarGoogleEstudiante();
         }else{
             alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
         }

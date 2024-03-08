@@ -1,11 +1,51 @@
-
+import styles from './Registro.module.css';
+import { useState } from 'react';
+import { ingresarGoogleEstudiante, registerWithCredentialsStudent } from '../controllers/auth';
 
 export default function RegistroEstudiante() {
-    
+    const [email,setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [number, setNumber] = useState("");
     
     return (
-        <div>
-             estudiante
+    <div className={styles.div_principal}>
+        <div style={{ margin:'8%' }}>{/**PARTE DERECHA */}
+            {/**INPUTS */}
+            <div className={styles.div_inputs}>
+                <input 
+                type="text" 
+                placeholder="Email"
+                onChange={(ev) => setEmail(ev.target.value)}
+                />
+                <input 
+                type="text" 
+                placeholder="Contraseña"
+                onChange={(ev) => setPassword(ev.target.value)}
+                />
+                <input 
+                type="text" 
+                placeholder="Nombre y Apellido"
+                onChange={(ev) => setName(ev.target.value)}
+                />
+                <input 
+                type="text" 
+                placeholder="Telefono"
+                onChange={(ev) => setNumber(ev.target.value)}
+                />
+            </div>
+            {/**ENLACES A OTRAS PAGINAS */}
+            <div className={styles.div_enlaces}>
+                <button onClick={() => registerWithCredentialsStudent(email,password,name,number)}>Crear Cuenta</button>
+                
+            </div>
+            {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
+            <div>
+                <hr className={styles.linea_horizontal}/>
+                <button onClick={() => ingresarGoogleEstudiante()}>GOOGLE</button>
+                <button>FACEBOOK</button>
+            </div>
         </div>
+    </div>
     );
 }
