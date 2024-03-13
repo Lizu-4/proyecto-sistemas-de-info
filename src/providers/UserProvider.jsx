@@ -17,6 +17,7 @@ export default function UserProvider({ children }) {
 
   //dado un user, este metodo busca el estudiante en la base de datos, lo convierte en un objeto estudiante y cambia el estado del user.
   async function obtenerEstudiante(user){
+    try{
       const usersCollection = collection(db,'estudiantes');
       const usersSnapshot = await getDocs(usersCollection);
       const users = usersSnapshot.docs.map((doc) => doc.data());
@@ -26,19 +27,26 @@ export default function UserProvider({ children }) {
           console.log("student" );
           setUser(estudiante);
         }
-      }
+      } 
+    }catch (e){
+      console.error(e,"error en funcion obtenerEstudiante");
+    }
   }
 
   async function obtenerAdministrador(user){
-    const usersCollection = collection(db,'administradores');
-    const usersSnapshot = await getDocs(usersCollection);
-    const users = usersSnapshot.docs.map((doc) => doc.data());
-    for (let i = 0; i < users.length; i++) {
-      if(users[i]['id'] === user.email){
-        const admi = new Administrador(users[i]['name'],users[i]['id'],users[i]['number'],users[i]['picture']);
-        console.log("admi" );
-        setUser(admi);
+    try{
+      const usersCollection = collection(db,'administradores');
+      const usersSnapshot = await getDocs(usersCollection);
+      const users = usersSnapshot.docs.map((doc) => doc.data());
+      for (let i = 0; i < users.length; i++) {
+        if(users[i]['id'] === user.email){
+          const admi = new Administrador(users[i]['name'],users[i]['id'],users[i]['number'],users[i]['picture']);
+          console.log("admi" );
+          setUser(admi);
+        }
       }
+    }catch (e){
+      console.error(e,"error en funcion obtenerAdministrador");
     }
 }
 
@@ -57,7 +65,7 @@ export default function UserProvider({ children }) {
   }, []);
   
   return (
-    <UserContext.Provider value={ user }>
+    <UserContext.Provider value = {{user,setUser} }>
       {children}
     </UserContext.Provider>
   );

@@ -14,3 +14,7 @@
     margin-right: 5%;
     margin-bottom: 5%;
 }
+.errorLabel {
+    color: red;
+    font-size: 12px;
+  }

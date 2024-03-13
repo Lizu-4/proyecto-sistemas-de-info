@@ -1,7 +1,8 @@
 import { logOut} from '../controllers/auth';
 import { useUser } from '../context/user';
+
 export default function Home() {
-  const user = useUser();
+  const {user, setUser} = useUser();
   function mostrarDatos(){
     if(user !== null){
       alert(user.name + "\n" + user.email + "\n" + user.number + "\n" + user.picture + "\n" + user.agrupaciones);

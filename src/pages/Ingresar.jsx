@@ -9,39 +9,54 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 
 export default function Ingresar() {
-    const user = useUser();
+    const {user, setUser} = useUser();
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
 
 
     function botonIniciarSesion(){
+        // Set initial error values to empty
+        setEmailError("");
+        setPasswordError("");
         //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
         if( user == null){
-            //esta funcion detecta el cambio de usuario y te lleva a agrupaciones
-            onAuthStateChanged(auth,(user) =>{
-                if(user !== null){
-                    navigate('/agrupaciones');
-                }
-            });
-            //verifica las credenciales y de ser validas, cambiara el estado de user
+            // Check if the user has entered both fields correctly
+            if ("" === email) {
+                setEmailError("Por favor coloca tu email");
+                return;
+            }
+        
+            if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                setEmailError("Por favor coloca un email valido");
+                return;
+            }
+        
+            if ("" === password) {
+                setPasswordError("Por favor ingresa una contraseña");
+                return;
+            }
+        
+            if (password.length < 7) {
+                setPasswordError("La contraseña debe tener al menos 7 caracteres");
+                return;
+            }
             loginWithCredentials(email,password);
+            //navigate("/Clubes");
         }else{
             alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
         }
     }
 
-    function botonIniciarSesionGoogle(){
+    async function botonIniciarSesionGoogle(){
         //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
         if( user == null){
-            //esta funcion detecta el cambio de usuario y te lleva a agrupaciones
-            onAuthStateChanged(auth,(user) =>{
-                if(user !== null){
-                    navigate('/agrupaciones');
-                }
-            });
             //verifica las credenciales y de ser validas, cambiara el estado de user
-            ingresarGoogleEstudiante();
+            //ingresarGoogleEstudiante();
+            //ingresarGoogleAdmi();
+
         }else{
             alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
         }
@@ -62,14 +77,17 @@ export default function Ingresar() {
             <div className={styles.div_inputs}>
                 <input 
                 type="text" 
-                placeholder="Usuario"
+                placeholder="Email"
                 onChange={(ev) => setEmail(ev.target.value)}
                 />
+                <label className={styles.errorLabel}>{emailError}</label>
+                <br />
                 <input 
                 type="text" 
                 placeholder="Contraseña"
                 onChange={(ev) => setPassword(ev.target.value)}
                 />
+                <label className={styles.errorLabel}>{passwordError}</label>
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>

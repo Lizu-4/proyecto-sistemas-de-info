@@ -10,6 +10,7 @@ export async function loginWithCredentials(email, password){
       
   }catch (e){
       console.error(e);
+      alert("Crendenciales invalidas");
   }
 }
 //Dados esos parametros. este metodo guardara los datos del estudiante en la base de datos de firebase
@@ -33,6 +34,7 @@ export async function registerWithCredentialsStudent(email, password,name,number
       return user;
   }catch (e){
       console.error(e);
+      alert("Error! Es posible que el correo especificado, ya este en uso");
       return null;
   }
 }
@@ -54,11 +56,13 @@ export async function registerWithCredentialsAdmi(email, password,name,number){
       return user;
   }catch (e){
       console.error(e);
+      alert("Error! Es posible que el correo especificado, ya este en uso");
       return null;
   }
 }
 
 export async function ingresarGoogleEstudiante(){
+  try{
     const result = await signInWithPopup(auth,googleProvider);
     const aditionalInfo = getAdditionalUserInfo(result);
     if(aditionalInfo.isNewUser){
@@ -66,42 +70,35 @@ export async function ingresarGoogleEstudiante(){
       await addDoc(usersCollection,{
         id:result.user.email,
         name: result.user.displayName,
-        number: "",
+        number: result.user.phoneNumber,
         picture: result.user.photoURL,
         agrupaciones:[]
       });
     }
     return result.user;
+    
+  }catch (e){
+    console.error(e);
+  }
 }
 
 export async function ingresarGoogleAdmi(){
-  const result = await signInWithPopup(auth,googleProvider);
-  const aditionalInfo = getAdditionalUserInfo(result);
-  if(aditionalInfo.isNewUser){
-    const usersCollection = collection(db,'administradores');
-    await addDoc(usersCollection,{
-      id:result.user.email,
-      name: result.user.displayName,
-      number: "",
-      picture: result.user.photoURL
-    });
+  try{
+    const result = await signInWithPopup(auth,googleProvider);
+    const aditionalInfo = getAdditionalUserInfo(result);
+    if(aditionalInfo.isNewUser){
+      const usersCollection = collection(db,'administradores');
+      await addDoc(usersCollection,{
+        id:result.user.email,
+        name: result.user.displayName,
+        number: result.user.phoneNumber,
+        picture: result.user.photoURL
+      });
+    }
+    return result.user;
+  }catch (e){
+      console.error(e);
   }
-  return result.user;
-}
-
-export async function iniciarSesionGoogleAdmi(){
-  const result = await signInWithPopup(auth,googleProvider);
-  const aditionalInfo = getAdditionalUserInfo(result);
-  if(aditionalInfo.isNewUser){
-    const usersCollection = collection(db,'administradores');
-    await addDoc(usersCollection,{
-      id:result.user.email,
-      name: result.user.displayName,
-      number: "",
-      picture: result.user.photoURL
-    });
-  }
-  return result.user;
 }
 
 export async function logOut(){

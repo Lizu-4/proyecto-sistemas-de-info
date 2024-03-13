@@ -33,6 +33,9 @@ div p{
     background-color: white;
     border-top: 2px solid;
   }
-
+  .errorLabel {
+    color: red;
+    font-size: 12px;
+  }
 
 
