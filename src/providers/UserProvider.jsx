@@ -22,8 +22,8 @@ export default function UserProvider({ children }) {
       const usersSnapshot = await getDocs(usersCollection);
       const users = usersSnapshot.docs.map((doc) => doc.data());
       for (let i = 0; i < users.length; i++) {
-        if(users[i]['id'] === user.email){
-          const estudiante = new Estudiante(users[i]['name'],users[i]['id'],users[i]['number'],users[i]['picture'],users[i]['agrupaciones']);
+        if(users[i]['email'] === user.email){
+          const estudiante = new Estudiante(users[i]['name'],users[i]['email'],users[i]['number'],users[i]['picture'],users[i]['agrupaciones']);
           console.log("student" );
           setUser(estudiante);
         }
@@ -39,8 +39,8 @@ export default function UserProvider({ children }) {
       const usersSnapshot = await getDocs(usersCollection);
       const users = usersSnapshot.docs.map((doc) => doc.data());
       for (let i = 0; i < users.length; i++) {
-        if(users[i]['id'] === user.email){
-          const admi = new Administrador(users[i]['name'],users[i]['id'],users[i]['number'],users[i]['picture']);
+        if(users[i]['email'] === user.email){
+          const admi = new Administrador(users[i]['name'],users[i]['email'],users[i]['number'],users[i]['picture']);
           console.log("admi" );
           setUser(admi);
         }

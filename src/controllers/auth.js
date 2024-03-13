@@ -23,14 +23,16 @@ export async function registerWithCredentialsStudent(email, password,name,number
       email,
       password
     );
-    const usersCollection = collection(db,'estudiantes');
-    await addDoc(usersCollection,{
-        id: email,
+    const id = auth.currentUser.uid;
+    const docRef = doc(db, "estudiantes", id);
+    const data = {
+        email: email,
         name: name,
         number:number,
         picture: user.photoURL,
-        agrupaciones: []
-    });
+        agrupaciones: [] 
+    };
+    await setDoc(docRef, data, { merge: true });
       return user;
   }catch (e){
       console.error(e);
@@ -46,13 +48,15 @@ export async function registerWithCredentialsAdmi(email, password,name,number){
       email,
       password
     );
-    const usersCollection = collection(db,'administradores');
-    await addDoc(usersCollection,{
-        id: email,
+    const id = auth.currentUser.uid;
+    const docRef = doc(db, "administradores", id);
+    const data = {
+        email: email,
         name: name,
         number:number,
         picture: user.photoURL
-    });
+    };
+    await setDoc(docRef, data, { merge: true });
       return user;
   }catch (e){
       console.error(e);
@@ -65,15 +69,18 @@ export async function ingresarGoogleEstudiante(){
   try{
     const result = await signInWithPopup(auth,googleProvider);
     const aditionalInfo = getAdditionalUserInfo(result);
+    const id = auth.currentUser.uid;
     if(aditionalInfo.isNewUser){
-      const usersCollection = collection(db,'estudiantes');
-      await addDoc(usersCollection,{
-        id:result.user.email,
+        const docRef = doc(db, "estudiantes", id);
+        const data = {
+        email:result.user.email,
         name: result.user.displayName,
         number: result.user.phoneNumber,
         picture: result.user.photoURL,
-        agrupaciones:[]
-      });
+        agrupaciones:[]  
+        };
+        await setDoc(docRef, data, { merge: true });
+        return true;
     }
     return result.user;
     
@@ -86,18 +93,22 @@ export async function ingresarGoogleAdmi(){
   try{
     const result = await signInWithPopup(auth,googleProvider);
     const aditionalInfo = getAdditionalUserInfo(result);
+    const id = auth.currentUser.uid;
     if(aditionalInfo.isNewUser){
-      const usersCollection = collection(db,'administradores');
-      await addDoc(usersCollection,{
-        id:result.user.email,
+        const docRef = doc(db, "administradores", id);
+        const data = {
+        email:result.user.email,
         name: result.user.displayName,
         number: result.user.phoneNumber,
         picture: result.user.photoURL
-      });
+        };
+        await setDoc(docRef, data, { merge: true });
+        return true;
     }
     return result.user;
+    
   }catch (e){
-      console.error(e);
+    console.error(e);
   }
 }
 
