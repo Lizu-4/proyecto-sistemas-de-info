@@ -7,6 +7,7 @@ import { routes } from "./constants/routes";
 import Registrar from "./pages/Registrar.jsx";
 import RegistroEstudiante from './pages/RegistroEstudiante.jsx';
 import RegistroAdministrador from './pages/RegistroAdministrador.jsx';
+import Perfil from "./pages/Perfil.jsx";
 
 
 
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             element: <RegistroAdministrador />,
           },
         ],
+      },
+      {
+        path: routes[4].path,
+        element: <Perfil />,
       },
     ],
   },

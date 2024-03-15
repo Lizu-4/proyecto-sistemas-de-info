@@ -5,29 +5,31 @@ import { UserContext } from '../context/user';
 import { useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection,getDocs } from "firebase/firestore";
+import { collection,getDocs,doc,getDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { Estudiante } from '../objetos/Estudiante';
 import { Administrador } from '../objetos/Administrador';
+import cargando from '../img/cargando.gif';
+import { modificarEstudiante } from '../controllers/auth';
 
 //El componente UserProvider es una función de React que recibe un objeto de propiedades llamado children. 
 //children representa los componentes hijos que se envolverán con el tema proporcionado por UserProvider.
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   //dado un user, este metodo busca el estudiante en la base de datos, lo convierte en un objeto estudiante y cambia el estado del user.
   async function obtenerEstudiante(user){
     try{
-      const usersCollection = collection(db,'estudiantes');
-      const usersSnapshot = await getDocs(usersCollection);
-      const users = usersSnapshot.docs.map((doc) => doc.data());
-      for (let i = 0; i < users.length; i++) {
-        if(users[i]['email'] === user.email){
-          const estudiante = new Estudiante(users[i]['name'],users[i]['email'],users[i]['number'],users[i]['picture'],users[i]['agrupaciones']);
-          console.log("student" );
-          setUser(estudiante);
-        }
-      } 
+      const docRef = doc(db, "estudiantes", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        // Accede a los campos del documento utilizando la sintaxis data.<nombre_del_campo>
+        const estudiante = new Estudiante(data.name,data.email,data.number,data.picture,data.agrupaciones);
+        setUser(estudiante);
+      }
     }catch (e){
       console.error(e,"error en funcion obtenerEstudiante");
     }
@@ -35,15 +37,14 @@ export default function UserProvider({ children }) {
 
   async function obtenerAdministrador(user){
     try{
-      const usersCollection = collection(db,'administradores');
-      const usersSnapshot = await getDocs(usersCollection);
-      const users = usersSnapshot.docs.map((doc) => doc.data());
-      for (let i = 0; i < users.length; i++) {
-        if(users[i]['email'] === user.email){
-          const admi = new Administrador(users[i]['name'],users[i]['email'],users[i]['number'],users[i]['picture']);
-          console.log("admi" );
-          setUser(admi);
-        }
+      const docRef = doc(db, "administradores", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        // Accede a los campos del documento utilizando la sintaxis data.<nombre_del_campo>
+        const estudiante = new Estudiante(data.name,data.email,data.number,data.picture,data.agrupaciones);
+        setUser(estudiante);
       }
     }catch (e){
       console.error(e,"error en funcion obtenerAdministrador");

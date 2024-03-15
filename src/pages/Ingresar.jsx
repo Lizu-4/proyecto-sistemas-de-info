@@ -54,8 +54,7 @@ export default function Ingresar() {
         //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
         if( user == null){
             //verifica las credenciales y de ser validas, cambiara el estado de user
-            //ingresarGoogleEstudiante();
-            //ingresarGoogleAdmi();
+            ingresarGoogleEstudiante();
 
         }else{
             alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");

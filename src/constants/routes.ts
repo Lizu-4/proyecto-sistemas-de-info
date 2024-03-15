@@ -25,4 +25,8 @@ export const routes = [
             },
         ],
     },
+    {
+        path: "/perfil",
+        name: "Perfil",
+    },
 ] as const 
