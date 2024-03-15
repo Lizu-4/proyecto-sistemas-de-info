@@ -152,6 +152,7 @@ export default function Perfil() {
           >Guardar</button>
           <label className={styles.errorLabel}>{emailError}</label>
         </div> */}
+        <br />
         <div className={styles.inputs}>
           <input 
             type="file" 
@@ -162,7 +163,7 @@ export default function Perfil() {
           <button 
           onClick={() => cambiarPicture()}
           className={styles.button}
-          >Guardar</button>
+          >Guardar foto de perfil</button>
           <label className={styles.errorLabel}>{pictureError}</label>
         </div>
         <br />
