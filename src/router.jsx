@@ -8,6 +8,7 @@ import Registrar from "./pages/Registrar.jsx";
 import RegistroEstudiante from './pages/RegistroEstudiante.jsx';
 import RegistroAdministrador from './pages/RegistroAdministrador.jsx';
 import Perfil from "./pages/Perfil.jsx";
+import RecuperarClave from "./pages/RecuperarClave.jsx";
 
 
 
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: routes[4].path,
         element: <Perfil />,
+      },
+      {
+        path: routes[5].path,
+        element: <RecuperarClave />,
       },
     ],
   },

@@ -90,7 +90,7 @@ export default function Ingresar() {
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
-                <a href="">¿Olvidaste tu contraseña?</a>
+                <a href="/RecuperarClave">¿Olvidaste tu contraseña?</a>
                 <button onClick={() => botonIniciarSesion()}>Iniciar sesion</button>
                 <a href="/Registrar">Crear Mi Cuenta</a>
             </div>

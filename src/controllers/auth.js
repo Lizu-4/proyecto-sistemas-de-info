@@ -21,11 +21,10 @@ import { updateEmail,updateProfile,sendPasswordResetEmail } from "firebase/auth"
 //     console.error(error);
 //   }
 // }
-export async function cambiarContrasena(){
-  sendPasswordResetEmail(auth,auth.currentUser.email)
+export async function cambiarContrasena(email){
+  sendPasswordResetEmail(auth,email)
   .then(() => {
-    // Password reset email sent!
-    // ..
+    alert("Se te ha enviado un mensaje al email indicado. \nSiga las instrucciones para obtener una nueva contraseña.");
   })
   .catch((error) => {
     const errorCode = error.code;

@@ -43,8 +43,8 @@ export default function UserProvider({ children }) {
       if (docSnap.exists()) {
         const data = docSnap.data();
         // Accede a los campos del documento utilizando la sintaxis data.<nombre_del_campo>
-        const estudiante = new Estudiante(data.name,data.email,data.number,data.picture,data.agrupaciones);
-        setUser(estudiante);
+        const admi = new Administrador(data.name,data.email,data.number,data.picture);
+        setUser(admi);
       }
     }catch (e){
       console.error(e,"error en funcion obtenerAdministrador");

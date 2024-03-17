@@ -26,7 +26,12 @@ export const routes = [
         ],
     },
     {
-        path: "/perfil",
+        path: "/Perfil",
         name: "Perfil",
     },
+    {
+        path: "/RecuperarClave",
+        name: "RecuperarClave",
+    },
+    
 ] as const 
