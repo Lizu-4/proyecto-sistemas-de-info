@@ -30,14 +30,12 @@ export default function Agrupaciones() {
 
   return (
     <div className='container'>
-      <p>epa</p>
     <div className='container d-flex flex-wrap justify-content-center'>
       {grupos.map((grupo) => (
           <>
 
         <div className="card text-center p-2 mx-1 my-3" style={{ width: '20rem'}}>
         <div className="card-body">
-        {console.log(grupo)}
           <h5 className="card-title" style={{color: '#bf54a1', fontWeight: '600'}}>{grupo.name}</h5>
           <img src={grupo.icon}/>
           {/* <p className="card-text">{grupo.descripcion}</p> 
