@@ -9,6 +9,8 @@ import RegistroEstudiante from './pages/RegistroEstudiante.jsx';
 import RegistroAdministrador from './pages/RegistroAdministrador.jsx';
 import Perfil from "./pages/Perfil.jsx";
 import RecuperarClave from "./pages/RecuperarClave.jsx";
+import Grupo from "./pages/Grupo.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 
 
@@ -51,6 +53,15 @@ export const router = createBrowserRouter([
         path: routes[5].path,
         element: <RecuperarClave />,
       },
+      {
+        path: routes[6].path,
+        element: <Grupo />,
+      },
+      {
+        path: routes[7].path,
+        element: <Dashboard />,
+      },
+
     ],
   },
 ]);
