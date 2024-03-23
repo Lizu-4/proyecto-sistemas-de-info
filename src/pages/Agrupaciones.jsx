@@ -38,13 +38,13 @@ export default function Agrupaciones() {
         <div className="card-body">
           <h5 className="card-title" style={{color: '#bf54a1', fontWeight: '600'}}>{grupo.name}</h5>
           <img src={grupo.icon}/>
-          {/* <p className="card-text">{grupo.descripcion}</p> 
+           {/* <p className="card-text">{grupo.descripcion}</p>  */}
           
-          {/* <NavLink  key={`/Club/${grupo.id}`}
-            to={`/Club/${grupo.id}`}
+          <NavLink  key={`/Grupo/${grupo.id}`}
+            to={`/Grupo/${grupo.id}`}
             state={{grupo:grupo}} className="btn btn-dark" style={{ backgroundColor: '#1C2C54' }}>Detalles</NavLink>
           <br />
-          <button id={grupo.id} onClick={ () => handleClick(grupo.id)} className={`${user.membresias.includes(club.id)? styles.desuscribirse : styles.suscribirse}`}></button> */}
+        
         </div>
         </div>
             

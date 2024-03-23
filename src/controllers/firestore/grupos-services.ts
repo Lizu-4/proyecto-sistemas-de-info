@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase"
-import { Club } from "../../objetos/Grupo";
+import { Grupo } from "../../objetos/Grupo";
 
 export async function getGrupos() {
     try {
