@@ -34,6 +34,11 @@ export default function RegistroEstudiante() {
             setEmailError("Por favor coloca un email valido");
             return;
         }
+
+        if (!/^\d+$/.test(number)) {
+            setNumberError("El teléfono no debe contener letras");
+            return;
+        }
     
         if ("" === password) {
             setPasswordError("Por favor ingresa una contraseña");
@@ -49,12 +54,13 @@ export default function RegistroEstudiante() {
     
     return (
     <div className={styles.div_principal}>
-        <div style={{ margin:'8%' }}>{/**PARTE DERECHA */}
+        <div style={{ margin:'2%' }}>
             {/**INPUTS */}
             <div className={styles.div_inputs}>
             <input 
                 type="text" 
                 placeholder="Nombre y Apellido"
+                className={styles.inputBox}
                 onChange={(ev) => setName(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{nameError}</label>
@@ -63,6 +69,7 @@ export default function RegistroEstudiante() {
                 <input 
                 type="text" 
                 placeholder="Email"
+                className={styles.inputBox}
                 onChange={(ev) => setEmail(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{emailError}</label>
@@ -71,6 +78,7 @@ export default function RegistroEstudiante() {
                 <input 
                 type="text" 
                 placeholder="Contraseña"
+                className={styles.inputBox}
                 onChange={(ev) => setPassword(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{passwordError}</label>
@@ -79,6 +87,7 @@ export default function RegistroEstudiante() {
                 <input 
                 type="text" 
                 placeholder="Telefono"
+                className={styles.inputBox}
                 onChange={(ev) => setNumber(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{numberError}</label>
@@ -86,7 +95,7 @@ export default function RegistroEstudiante() {
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
-                <button onClick={() => register()}>Crear Cuenta</button>
+                <button className={styles.button} onClick={() => register()}>Registarme</button>
                 
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}

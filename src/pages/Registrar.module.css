@@ -6,9 +6,11 @@
     width: 100%;
     color: white;
   
-
+    justify-content: center;
     background-color: #000A62;
-  
+    font-size: 44px;
+    font-weight: bold;
+    flex-direction: column;
 
 
     .nav {
@@ -27,12 +29,16 @@
         }
   
         &.active {
-          color: #ffffff;
+          color: orange;
         }
       }
     }
   }
 
 .d{
-  padding: 4%;
+  padding: 5%;
+}
+.linea_horizontal {
+  background-color: white;
+  border-top: 2px solid;
 }

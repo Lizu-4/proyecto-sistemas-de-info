@@ -1,0 +1,14 @@
+.div_principal {
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    background-color: #1C2C54;
+    color: white;
+    align-items: center;
+    font-weight: bolder;
+  
+  }
+.errorLabel {
+    color: red;
+    font-size: 12px;
+}

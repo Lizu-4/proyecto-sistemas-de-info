@@ -9,6 +9,7 @@ import RegistroEstudiante from './pages/RegistroEstudiante.jsx';
 import RegistroAdministrador from './pages/RegistroAdministrador.jsx';
 import Perfil from "./pages/Perfil.jsx";
 import RecuperarClave from "./pages/RecuperarClave.jsx";
+import EditarPerfil from './pages/EditarPerfil.jsx';
 
 
 
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: routes[5].path,
         element: <RecuperarClave />,
+      },
+      {
+        path: routes[6].path,
+        element: <EditarPerfil />,
       },
     ],
   },

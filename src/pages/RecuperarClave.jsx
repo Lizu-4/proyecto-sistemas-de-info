@@ -1,6 +1,7 @@
-import styles from './Registro.module.css';
+import styles from './RecuperarClave.module.css';
 import { useState } from 'react';
 import { cambiarContrasena, ingresarGoogleEstudiante, registerWithCredentialsStudent } from '../controllers/auth';
+import { TextField } from '@mui/material';
 
 export default function RegistroEstudiante() {
     const [email,setEmail] = useState("");
@@ -39,7 +40,7 @@ export default function RegistroEstudiante() {
                 <label className={styles.errorLabel}>{emailError}</label>
                 <br />
             </div>
-            {/**ENLACES A OTRAS PAGINAS */}
+            <br />
             <div className={styles.div_enlaces}>
                 <button onClick={() => handleClick()}>continuar</button>  
             </div>

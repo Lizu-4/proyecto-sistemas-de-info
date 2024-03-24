@@ -17,11 +17,11 @@ export const routes = [
         children:[
             {
                 path: "/Registrar/estudiante",
-                name: "estudiante",
+                name: "Estudiante",
             },
             {
                 path: "/Registrar/administrador",
-                name: "administrador",
+                name: "Administrador",
             },
         ],
     },
@@ -32,6 +32,10 @@ export const routes = [
     {
         path: "/RecuperarClave",
         name: "RecuperarClave",
+    },
+    {
+        path: "/EditarPerfil",
+        name: "EditarPerfil",
     },
     
 ] as const 
