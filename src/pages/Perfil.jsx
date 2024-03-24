@@ -3,9 +3,33 @@ import styles from './Perfil.module.css';
 import { Link } from 'react-router-dom';
 import { Estudiante } from '../objetos/Estudiante';
 import GrupoName from '../components/GrupoName';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import useGrupos from "../hooks/useGrupos";
+import cargando from '../img/cargando.gif';
 
 export default function Perfil() {
   const {user,setUser} = useUser();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (user === null) {
+      navigate("Ingresar");
+    }
+  }, []);
+
+  const {grupoStatus,} = useGrupos();
+  const grupos = grupoStatus.data;
+
+  if (grupoStatus.status === "loading" ) {
+    return (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+          <img width="40%" height="20%" src={cargando}/>
+        </div>
+    );
+  } else if (grupoStatus.status === "error" ) {
+    return <div>Error al cargar los datos</div>;
+  }
 
   return (
     <div className={styles.div_principal}>
