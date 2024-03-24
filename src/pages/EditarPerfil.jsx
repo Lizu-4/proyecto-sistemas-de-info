@@ -6,6 +6,8 @@ import { Estudiante } from '../objetos/Estudiante';
 import { Administrador } from '../objetos/Administrador';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function EditarPerfil(){
     const {user,setUser} = useUser();
@@ -124,10 +126,13 @@ export default function EditarPerfil(){
           reader.readAsDataURL(nueva_picture); // Lee la imagen seleccionada como una URL base64
         }
       }
+     //cada vez que el auth cambie pasara por aqui
       useEffect(() => {
-        if (user === null) {
-          navigate("Ingresar");
-        }
+        onAuthStateChanged(auth, (user) => {
+            if (user === null) {
+                navigate("/Ingresar");  
+            }
+          });
       }, []);
 
     return(

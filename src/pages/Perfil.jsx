@@ -7,15 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import useGrupos from "../hooks/useGrupos";
 import cargando from '../img/cargando.gif';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Perfil() {
   const {user,setUser} = useUser();
   const navigate = useNavigate();
-  
+
+  //cada vez que el auth cambie pasara por aqui
   useEffect(() => {
-    if (user === null) {
-      navigate("Ingresar");
-    }
+    onAuthStateChanged(auth, (user) => {
+        if (user === null) {
+            navigate("/Ingresar");  
+        }
+      });
   }, []);
 
   const {grupoStatus,} = useGrupos();
