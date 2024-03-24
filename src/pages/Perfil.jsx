@@ -23,6 +23,15 @@ export default function Perfil() {
   const [telefonoError, setTelefonoError] = useState("");
   const [pictureError, setPictureError] = useState("");
   const navigate = useNavigate();
+
+    //cada vez que el auth cambie pasara por aqui
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+          if (user === null) {
+              navigate("/Ingresar");  
+          }
+        });
+    }, []);
   
 
   function cambiarNombre(){
@@ -96,7 +105,9 @@ export default function Perfil() {
   // }
 
   return (
+   
     <div className={styles.div_principal}>
+       {console.log(user)}
       <header>
         {/**ENCABEZADO */}
         <div className={styles.titleContainer}>
@@ -110,15 +121,17 @@ export default function Perfil() {
         <p>Nombre: {user.name}</p>
         <p>Email: {user.email}</p>
         <p>Telefono: {user.number}</p>
-        <p style={{ fontSize: "25px", color: "#D175B7"}}>Miembro de: </p> 
-        <div className="agrupaciones">
-       
-       {user.agrupaciones.map((index) => (
-       <GrupoName
-       key={index}
-       id={index}
-       />
-         ))} </div>
+        
+
+        { user instanceof Estudiante ?
+        <div className="agrupaciones">  
+        <p style={{ fontSize: "25px", color: "#D175B7"}}>Miembro de: </p>   
+        {user.agrupaciones.map((index) => (
+          <GrupoName
+          key={index}
+          id={index}
+          />
+            ))} </div> :  <p style={{ fontSize: "25px", color: "#D175B7"}}> ADMINISTRADOR </p>  }
 
       </header>
       <div className={styles.div_inputs}>
