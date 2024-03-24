@@ -8,7 +8,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <UserProvider>
+    <UserProvider>
       <RouterProvider router={router} /> 
     </UserProvider>
   </React.StrictMode>

@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
 import { modificarEstudiante} from '../controllers/auth';
 import { Estudiante } from '../objetos/Estudiante';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import styles from './Grupo.module.css';
 
@@ -92,7 +93,37 @@ export default function Agrupacion(){
                styles.desuscribirse : styles.suscribirse}`}></button>
        
            </div>
-           
+           <div>
+            <input 
+              id='price'
+              type="number" 
+              placeholder="Monto a donar"
+            />
+           </div>
+           <div>
+            <PayPalScriptProvider options={{ 
+              clientId: "AUc8t3lkrJTMH1tmBK83aY3fONNsSGc5arquBmfjKSt4CnIyT6JwSNUxnBF7naEDmefiNExEmJGNmpIA"
+            }}>
+              <PayPalButtons 
+              style={{ layout: "horizontal" }} 
+              createOrder= {(data,actions)=>{
+                return actions.order.create({
+                  purchase_units:[
+                    {
+                      amount: {
+                        value: (!isNaN(document.getElementById('price').value) && document.getElementById('price').value !== '' && document.getElementById('price').value >= 0) ? document.getElementById('price').value : (alert("Debes colocar un monto válido\nNo coloques letras\nNo coloques numeros negativos"), null)
+                      }
+                    }
+                  ]
+                })
+              }}
+              onCancel= {()=>{}}
+              onApprove= {(data,actions)=>{
+                return actions.order.capture(alert("El pago ha sido Exitoso"));
+              }}
+              />
+            </PayPalScriptProvider>
+           </div>
            
           
            
