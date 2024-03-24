@@ -5,6 +5,7 @@ import img_user from '../img/cat.png'
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
+import GrupoName from '../components/GrupoName';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { Estudiante } from '../objetos/Estudiante';
@@ -110,6 +111,14 @@ export default function Perfil() {
         <p>Email: {user.email}</p>
         <p>Telefono: {user.number}</p>
         <p style={{ fontSize: "25px", color: "#D175B7"}}>Miembro de: </p> 
+        <div className="agrupaciones">
+       
+       {user.agrupaciones.map((index) => (
+       <GrupoName
+       key={index}
+       id={index}
+       />
+         ))} </div>
 
       </header>
       <div className={styles.div_inputs}>

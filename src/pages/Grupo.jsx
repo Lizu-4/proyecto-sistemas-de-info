@@ -9,6 +9,10 @@ import { useState, useEffect } from 'react';
 import { useUser } from "../context/user";
 import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
+import { modificarEstudiante} from '../controllers/auth';
+
+import styles from './Grupo.module.css';
+
 
 
 export default function Agrupacion(){
@@ -16,7 +20,6 @@ export default function Agrupacion(){
 
   // let location = useLocation();
    const { id } = useParams();
-  console.log('gola');
    console.log(id);
    
    const [loading, setLoading] = useState(true);
@@ -29,53 +32,50 @@ export default function Agrupacion(){
        setLoading(true);
        const grupo = await getGrupoById(id);
        setLoading(false);
-       console.log({ grupo });
        setGrupo(grupo);
      }
  
      getGrupo(id);
    }, [id]);
 
-  //  function handleClick(id){
-  //      const elemento = document.getElementById(id);
-  //      if(user.membresias.includes(id)){
-  //       const membresiasActualizadas = user.membresias.filter(membresia => membresia !== id); // Eliminar el ID de membresias
-  //       setUser(prevUser => ({
-  //         ...prevUser,
-  //         membresias: membresiasActualizadas
-  //       }));
-  //       // Agregar una clase al elemento
-  //       elemento.classList.remove(styles.desuscribirse);
-  //       elemento.classList.add(styles.suscribirse);
-  //       const usuario_modificado = {
-  //        nombre: user.nombre,
-  //        apellido: user.apellido,
-  //        username: user.username,
-  //        email: user.email,
-  //        videojuego_preferido: user.videojuego_preferido,
-  //        membresias:membresiasActualizadas, 
-  //      };
-  //      modificarUsuario(usuario_modificado);
-  //      }else{
-  //         const membresiasActualizadas = [...user.membresias, id]  //agregar membresia
-  //         setUser(prevUser => ({
-  //           ...prevUser,
-  //           membresias: membresiasActualizadas
-  //         }));
-  //         elemento.classList.remove(styles.suscribirse);
-  //         elemento.classList.add(styles.desuscribirse);
-  //         const usuario_modificado = {
-  //          nombre: user.nombre,
-  //          apellido: user.apellido,
-  //          username: user.username,
-  //          email: user.email,
-  //          videojuego_preferido: user.videojuego_preferido,
-  //          membresias:membresiasActualizadas, 
-  //        };
-  //        modificarUsuario(usuario_modificado);
+   function handleClick(id){
+       const elemento = document.getElementById(id);
+       if(user.agrupaciones.includes(id)){
+        const agrupacionesActualizadas = user.agrupaciones.filter(agrupaciones => agrupaciones !== id); // Eliminar el ID de membresias
+        setUser(prevUser => ({
+          ...prevUser,
+          agrupaciones: agrupacionesActualizadas
+        }));
+        // Agregar una clase al elemento
+        elemento.classList.remove(styles.desuscribirse);
+        elemento.classList.add(styles.suscribirse);
+        const estudiante_modificado = {
+          name: user.name,
+            email: user.email,
+            number:user.number,
+            picture:user.picture,
+            agrupaciones:agrupacionesActualizadas, 
+       };
+       modificarEstudiante(estudiante_modificado);
+       }else{
+          const agrupacionesActualizadas = [...user.agrupaciones, id]  //agregar membresia
+          setUser(prevUser => ({
+            ...prevUser,
+            agrupaciones: agrupacionesActualizadas
+          }));
+          elemento.classList.remove(styles.suscribirse);
+          elemento.classList.add(styles.desuscribirse);
+          const estudiante_modificado = {
+            name: user.name,
+            email: user.email,
+            number:user.number,
+            picture:user.picture,
+            agrupaciones:agrupacionesActualizadas, 
+         };
+         modificarEstudiante(estudiante_modificado);
           
-  //      }
-  //   }
+       }
+    }
  
    if (loading) {
      return <div>Cargando...</div>;
@@ -88,11 +88,10 @@ export default function Agrupacion(){
                <div style={{color: "#4BC3B5", fontSize: "65px", marginBottom: "10px"}}> {grupo.name}</div>
                <p>{grupo.mision}</p>
                <p>{grupo.vision}</p>
-{/* 
-               <button id={grupo.id} onClick={ () => handleClick(grupo.id)}  
-              //  className={`${user.membresias.includes(club.id)? styles.desuscribirse : styles.suscribirse}`}
-               ></button> */}
-
+               <button id={grupo.id} onClick={ () => handleClick(grupo.id)} 
+               className={`${user.agrupaciones.includes(grupo.id)? 
+               styles.desuscribirse : styles.suscribirse}`}></button>
+       
            </div>
            
            
@@ -103,4 +102,4 @@ export default function Agrupacion(){
        </>
    );
   }
-  
+  styles
