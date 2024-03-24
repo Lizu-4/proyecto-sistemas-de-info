@@ -14,6 +14,7 @@ export default function Home() {
     }
   }
   function tipo(){
+    console.log(user);
     if(user instanceof Estudiante){
       alert("Estudiante");
     }else if(user instanceof Administrador){

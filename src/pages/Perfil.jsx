@@ -1,13 +1,8 @@
 import { useUser } from '../context/user';
 import styles from './Perfil.module.css';
-
-
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
-
 import { Estudiante } from '../objetos/Estudiante';
+import GrupoName from '../components/GrupoName';
 
 export default function Perfil() {
   const {user,setUser} = useUser();
@@ -15,28 +10,38 @@ export default function Perfil() {
   return (
     <div className={styles.div_principal}>
       {/* primer div */}
-      <div className={styles.primer_div}>
-        <div>
-          <img className={styles.avatar} src={user.picture} ></img>
-          {user instanceof Estudiante?
-          <p style={{textAlign:"center", fontSize:"100%"}}>Estudiante</p>:
-          <p style={{textAlign:"center", fontSize:"100%"}}>Administrador</p>}
+      <div className={styles.parte_superior}>
+        <div className={styles.primer_div_de_parte_superior}>
+          <div>
+            <img className={styles.avatar} src={user.picture} ></img>
+            {user instanceof Estudiante?
+            <p style={{textAlign:"center", fontSize:"100%"}}>Estudiante</p>:
+            <p style={{textAlign:"center", fontSize:"100%"}}>Administrador</p>}
+          </div>
+          <div className={styles.titleContainer}>
+            {/* <p style={{color: "#4BC3B5"}}> {user instanceof Estudiante ? "Estudiante":"Administrador"}</p> */}
+            <p style={{fontSize:"60%"}}> {user.name} </p>
+            <p style={{ fontSize: "30%"}}>{user.email}</p>
+            <p style={{ fontSize: "30%"}}> {user.number} </p>
+          </div>
         </div>
-        <div className={styles.titleContainer}>
-          {/* <p style={{color: "#4BC3B5"}}> {user instanceof Estudiante ? "Estudiante":"Administrador"}</p> */}
-          <p style={{fontSize:"60%"}}> {user.name} </p>
-          <p style={{ fontSize: "30%"}}>{user.email}</p>
-          <p style={{ fontSize: "30%"}}> {user.number} </p>
-        </div>
-        <div>
+        <div className={styles.segundo_div_de_parte_superior}>
         <Link to="/EditarPerfil">
-        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-          <Fab color="warning" aria-label="edit">
-            <EditIcon />
-          </Fab>
-        </Box>
+            <button className={styles.button}>Editar Perfil</button>
         </Link>
         </div>
+      </div>
+      {/* Parte inferior */}
+      <div>
+      { user instanceof Estudiante ?
+        <div className="agrupaciones">  
+        <p style={{ fontSize: "25px", color: "#D175B7"}}>Miembro de: </p>   
+        {user.agrupaciones.map((index) => (
+          <GrupoName
+          key={index}
+          id={index}
+          />
+            ))} </div> :  <p style={{ fontSize: "25px", color: "#D175B7"}}> ADMINISTRADOR </p>  }
       </div>
     </div>
   );

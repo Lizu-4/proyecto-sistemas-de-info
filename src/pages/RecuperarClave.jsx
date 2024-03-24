@@ -1,7 +1,6 @@
 import styles from './RecuperarClave.module.css';
 import { useState } from 'react';
 import { cambiarContrasena, ingresarGoogleEstudiante, registerWithCredentialsStudent } from '../controllers/auth';
-import { TextField } from '@mui/material';
 
 export default function RegistroEstudiante() {
     const [email,setEmail] = useState("");
@@ -29,20 +28,19 @@ export default function RegistroEstudiante() {
     return (
     <div className={styles.div_principal}>
         <p>Ingrese los datos requeridos y presione "continuar" para establecer una nueva clave</p>
-        <div style={{ margin:'8%' }}>
-            {/**INPUTS */}
+        <div className={styles.div}>
             <div className={styles.div_inputs}>
                 <input 
                 type="text" 
                 placeholder="Email"
+                className={styles.inputBox}
                 onChange={(ev) => setEmail(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{emailError}</label>
                 <br />
             </div>
-            <br />
             <div className={styles.div_enlaces}>
-                <button onClick={() => handleClick()}>continuar</button>  
+                <button className={styles.button} onClick={() => handleClick()}>continuar</button>  
             </div>
         </div>
     </div>

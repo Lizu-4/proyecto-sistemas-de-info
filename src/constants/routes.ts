@@ -34,6 +34,14 @@ export const routes = [
         name: "RecuperarClave",
     },
     {
+        path: "/Grupo/:id",
+        name: "Grupo",
+    },
+    {
+        path: "/Dashboard",
+        name: "Dashboard",
+    },
+    {
         path: "/EditarPerfil",
         name: "EditarPerfil",
     },

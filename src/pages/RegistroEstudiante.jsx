@@ -95,7 +95,7 @@ export default function RegistroEstudiante() {
             </div>
             {/**ENLACES A OTRAS PAGINAS */}
             <div className={styles.div_enlaces}>
-                <button className={styles.button} onClick={() => register()}>Registarme</button>
+                <button className={styles.button} onClick={() => register()}>Registrarme</button>
                 
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}

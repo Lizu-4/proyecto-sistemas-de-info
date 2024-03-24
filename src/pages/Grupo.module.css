@@ -1,0 +1,39 @@
+.suscribirse {
+    /* Estilos para el botón de suscripción */
+    background-color: #4BC3B5; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como elemento en línea */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 4px 2px; /* Margen exterior */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+    border-radius: 8px; /* Radio de borde */
+    content: "Suscribirse";
+  }
+  
+  .desuscribirse {
+    /* Estilos para el botón de desuscripción */
+    background-color: #c43227; /* Color de fondo rojo */
+    color: white; /* Color del texto blanco */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    text-align: center; /* Alineación del texto al centro */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como elemento en línea */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 4px 2px; /* Margen exterior */
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón */
+    border-radius: 8px; /* Radio de borde */
+    content: "Desuscribirse";
+  }
+  .desuscribirse::after {
+    content: "Desuscribirse"; /* Agregar el texto deseado */
+    /* Estilos adicionales para el texto */
+  }
+  .suscribirse::after {
+    content: "Suscribirse"; /* Agregar el texto deseado */
+    /* Estilos adicionales para el texto */
+  }

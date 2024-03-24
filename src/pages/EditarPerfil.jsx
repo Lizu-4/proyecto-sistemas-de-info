@@ -4,6 +4,8 @@ import styles from './Perfil.module.css';
 import { useState } from 'react';
 import { Estudiante } from '../objetos/Estudiante';
 import { Administrador } from '../objetos/Administrador';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function EditarPerfil(){
     const {user,setUser} = useUser();
@@ -14,6 +16,8 @@ export default function EditarPerfil(){
     const [nameError, setNameError] = useState("");
     const [telefonoError, setTelefonoError] = useState("");
     const [pictureError, setPictureError] = useState("");
+
+    const navigate = useNavigate();
 
     function cambiarNombre(){
         setNameError("");
@@ -120,6 +124,11 @@ export default function EditarPerfil(){
           reader.readAsDataURL(nueva_picture); // Lee la imagen seleccionada como una URL base64
         }
       }
+      useEffect(() => {
+        if (user === null) {
+          navigate("Ingresar");
+        }
+      }, []);
 
     return(
         <div className={styles.div_inputs}>
