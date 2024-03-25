@@ -3,7 +3,7 @@ import logo from '../img/UNIMET_neg.png';
 import styles from './Ingresar.module.css';
 import { useState } from 'react';
 import { useUser } from '../context/user';
-import { loginWithCredentials,ingresarGoogleEstudiante } from '../controllers/auth';
+import { loginWithCredentials,ingresarGoogleEstudiante,ingresarFacebookEstudiante } from '../controllers/auth';
 
 export default function Ingresar() {
     const {user, setUser} = useUser();
@@ -57,6 +57,17 @@ export default function Ingresar() {
         }
     }
 
+    async function botonIniciarSesionFacebook(){
+        //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
+        if( user == null){
+            //verifica las credenciales y de ser validas, cambiara el estado de user,en caso de ser un nuevo usuario lo registrara como estudiante
+            ingresarFacebookEstudiante();
+
+        }else{
+            alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
+        }
+    }
+
     return (
     <div className={styles.div_principal}>
         <div>{/**PARTE IZQUIERDA(IMAGEN) */}
@@ -94,7 +105,7 @@ export default function Ingresar() {
             <div>
                 <hr className={styles.linea_horizontal}/>
                 <button onClick={() => botonIniciarSesionGoogle()}>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <button onClick={() => botonIniciarSesionFacebook()}>FACEBOOK</button>
             </div>
         </div>
     </div>

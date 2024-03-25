@@ -1,5 +1,5 @@
 import {EmailAuthCredential, EmailAuthProvider, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, getAdditionalUserInfo, onAuthStateChanged, sendEmailVerification, signInAnonymously, signInWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut, verifyBeforeUpdateEmail} from "firebase/auth";
-import {auth,googleProvider} from "../firebase";
+import {auth,googleProvider,facebookProvider} from "../firebase";
 import { addDoc, collection, setDoc, doc,getDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { Estudiante } from "../objetos/Estudiante";
@@ -188,3 +188,50 @@ export async function modificarAdministrador(user_modificado){
 //     }
 //     return false;
 // }
+
+export async function ingresarFacebookEstudiante(){
+  try{
+    const result = await signInWithPopup(auth,facebookProvider);
+    const aditionalInfo = getAdditionalUserInfo(result);
+    const id = auth.currentUser.uid;
+    if(aditionalInfo.isNewUser){
+        const docRef = doc(db, "estudiantes", id);
+        const data = {
+        email:result.user.email,
+        name: result.user.displayName,
+        number: result.user.phoneNumber,
+        picture: result.user.photoURL ? result.user.photoURL : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3gkd0qUkv1F9epnQv4Wv0cgvrsGkJ7pETR3VEbPF1ne6SGhhkYXybBInQ5CGShqmPtyE&usqp=CAU',
+        agrupaciones:[]  
+        };
+        await setDoc(docRef, data, { merge: true });
+        return true;
+    }
+    return result.user;
+    
+  }catch (e){
+    console.error(e);
+  }
+}
+
+export async function ingresarFacebookAdmi(){
+  try{
+    const result = await signInWithPopup(auth,facebookProvider);
+    const aditionalInfo = getAdditionalUserInfo(result);
+    const id = auth.currentUser.uid;
+    if(aditionalInfo.isNewUser){
+        const docRef = doc(db, "administradores", id);
+        const data = {
+        email:result.user.email,
+        name: result.user.displayName,
+        number: result.user.phoneNumber,
+        picture: result.user.photoURL ? result.user.photoURL : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3gkd0qUkv1F9epnQv4Wv0cgvrsGkJ7pETR3VEbPF1ne6SGhhkYXybBInQ5CGShqmPtyE&usqp=CAU',
+        };
+        await setDoc(docRef, data, { merge: true });
+        return true;
+    }
+    return result.user;
+    
+  }catch (e){
+    console.error(e);
+  }
+}

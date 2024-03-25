@@ -1,6 +1,9 @@
 import styles from './Registro.module.css';
 import { useState } from 'react';
 import { ingresarGoogleEstudiante, registerWithCredentialsStudent } from '../controllers/auth';
+import { auth,facebookProvider } from '../firebase';
+import { signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { ingresarFacebookEstudiante } from '../controllers/auth';
 
 export default function RegistroEstudiante() {
     const [email,setEmail] = useState("");
@@ -102,7 +105,7 @@ export default function RegistroEstudiante() {
             <div>
                 <hr className={styles.linea_horizontal}/>
                 <button onClick={() => ingresarGoogleEstudiante()}>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <button onClick={() => ingresarFacebookEstudiante()}>FACEBOOK</button>
             </div>
         </div>
     </div>

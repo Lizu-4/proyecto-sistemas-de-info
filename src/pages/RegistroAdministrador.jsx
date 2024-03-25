@@ -1,6 +1,6 @@
 import styles from './Registro.module.css';
 import { useState } from 'react';
-import { ingresarGoogleAdmi, registerWithCredentialsAdmi } from '../controllers/auth';
+import { ingresarFacebookAdmi, ingresarGoogleAdmi, registerWithCredentialsAdmi } from '../controllers/auth';
 
 export default function RegistroAdministrador() {
     const [email,setEmail] = useState("");
@@ -102,7 +102,7 @@ export default function RegistroAdministrador() {
             <div>
                 <hr className={styles.linea_horizontal}/>
                 <button onClick={() => ingresarGoogleAdmi()}>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <button onClick={() => ingresarFacebookAdmi()}>FACEBOOK</button>
             </div>
         </div>
     </div>
