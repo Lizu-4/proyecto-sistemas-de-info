@@ -210,6 +210,7 @@ export async function ingresarFacebookEstudiante(){
     
   }catch (e){
     console.error(e);
+    alert(e);
   }
 }
 
@@ -233,5 +234,6 @@ export async function ingresarFacebookAdmi(){
     
   }catch (e){
     console.error(e);
+    alert(e);
   }
 }

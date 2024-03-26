@@ -27,7 +27,7 @@ export default function RegistroEstudiante() {
     
     return (
     <div className={styles.div_principal}>
-        <p>Ingrese los datos requeridos y presione "continuar" para establecer una nueva clave</p>
+        <p>Ingrese los datos requeridos y presione "Continuar" para establecer una nueva clave</p>
         <div className={styles.div}>
             <div className={styles.div_inputs}>
                 <input 
@@ -40,7 +40,7 @@ export default function RegistroEstudiante() {
                 <br />
             </div>
             <div className={styles.div_enlaces}>
-                <button className={styles.button} onClick={() => handleClick()}>continuar</button>  
+                <button className={styles.button} onClick={() => handleClick()}>Continuar</button>  
             </div>
         </div>
     </div>

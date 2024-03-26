@@ -4,6 +4,7 @@ import { ingresarGoogleEstudiante, registerWithCredentialsStudent } from '../con
 import { auth,facebookProvider } from '../firebase';
 import { signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { ingresarFacebookEstudiante } from '../controllers/auth';
+import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons';
 
 export default function RegistroEstudiante() {
     const [email,setEmail] = useState("");
@@ -104,8 +105,8 @@ export default function RegistroEstudiante() {
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
             <div>
                 <hr className={styles.linea_horizontal}/>
-                <button onClick={() => ingresarGoogleEstudiante()}>GOOGLE</button>
-                <button onClick={() => ingresarFacebookEstudiante()}>FACEBOOK</button>
+                <GoogleLoginButton onClick={() => ingresarGoogleEstudiante()}></GoogleLoginButton>
+                <FacebookLoginButton onClick={() => ingresarFacebookEstudiante()}></FacebookLoginButton>
             </div>
         </div>
     </div>
