@@ -1,0 +1,62 @@
+
+  .div_principal {
+    display: flex;
+    flex-direction: column;
+    background-color: #1C2C54;
+    color: white;
+    align-items: center;
+    font-weight: bolder;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    width: 400px;
+    padding: 20px;
+  }
+.errorLabel {
+    color: red;
+    font-size: 12px;
+}
+.div{
+  margin-right: 10%;
+}
+
+@media (max-width: 768px) {
+  .div_principal {
+    display: flex;
+    flex-direction: column;
+    background-color: #1C2C54;
+    color: white;
+    align-items: center;
+    font-weight: bolder;
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    width: 90%;
+    padding: 20px;
+  }
+  .div{
+    margin-right: 20%;
+  }
+}
+.button{
+  border: none;
+  background: orange;
+  color: white;
+  width: 120%;
+  height: 70%;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.inputBox {
+  height: 50%;
+  width: 120%;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}

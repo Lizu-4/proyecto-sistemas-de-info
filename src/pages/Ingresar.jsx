@@ -4,9 +4,6 @@ import styles from './Ingresar.module.css';
 import { useState } from 'react';
 import { useUser } from '../context/user';
 import { loginWithCredentials,ingresarGoogleEstudiante } from '../controllers/auth';
-import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
 
 export default function Ingresar() {
     const {user, setUser} = useUser();
@@ -14,7 +11,6 @@ export default function Ingresar() {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const navigate = useNavigate();
 
 
     function botonIniciarSesion(){

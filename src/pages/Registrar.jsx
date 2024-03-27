@@ -18,6 +18,7 @@ export default function Registar() {
         <div className={styles.d}>
             <header className={styles.header}>
                 <p>Registro</p>
+                <hr className={styles.linea_horizontal}/>
                 <nav className={styles.nav}>
                     <NavLink
                         id='estudiante'

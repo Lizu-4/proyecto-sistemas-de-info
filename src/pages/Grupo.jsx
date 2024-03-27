@@ -1,3 +1,4 @@
+
 import useGrupos from '../hooks/useGrupos';
 import { Grupo } from '../objetos/Grupo'; 
 import { useLocation } from "react-router-dom";
@@ -12,6 +13,7 @@ import cargando from '../img/cargando.gif';
 import { modificarEstudiante} from '../controllers/auth';
 
 import styles from './Grupo.module.css';
+import { Estudiante } from '../objetos/Estudiante';
 
 
 
@@ -19,28 +21,28 @@ export default function Agrupacion(){
 
 
   // let location = useLocation();
-   const { id } = useParams();
-   console.log(id);
-   
-   const [loading, setLoading] = useState(true);
-   const [grupo, setGrupo] = useState(null);
-   const {user,setUser} = useUser();
- 
- 
-   useEffect(() => {
-     async function getGrupo(id) {
-       setLoading(true);
-       const grupo = await getGrupoById(id);
-       setLoading(false);
-       setGrupo(grupo);
-     }
- 
-     getGrupo(id);
-   }, [id]);
+    const { id } = useParams();
+    console.log(id);
+    
+    const [loading, setLoading] = useState(true);
+    const [grupo, setGrupo] = useState(null);
+    const {user,setUser} = useUser();
+  
+  
+    useEffect(() => {
+      async function getGrupo(id) {
+        setLoading(true);
+        const grupo = await getGrupoById(id);
+        setLoading(false);
+        setGrupo(grupo);
+      }
+  
+      getGrupo(id);
+    }, [id]);
 
-   function handleClick(id){
-       const elemento = document.getElementById(id);
-       if(user.agrupaciones.includes(id)){
+    function handleClick(id){
+        const elemento = document.getElementById(id);
+        if(user.agrupaciones.includes(id)){
         const agrupacionesActualizadas = user.agrupaciones.filter(agrupaciones => agrupaciones !== id); // Eliminar el ID de membresias
         setUser(prevUser => ({
           ...prevUser,
@@ -55,9 +57,9 @@ export default function Agrupacion(){
             number:user.number,
             picture:user.picture,
             agrupaciones:agrupacionesActualizadas, 
-       };
-       modificarEstudiante(estudiante_modificado);
-       }else{
+      };
+        modificarEstudiante(estudiante_modificado);
+        }else{
           const agrupacionesActualizadas = [...user.agrupaciones, id]  //agregar membresia
           setUser(prevUser => ({
             ...prevUser,
@@ -71,35 +73,29 @@ export default function Agrupacion(){
             number:user.number,
             picture:user.picture,
             agrupaciones:agrupacionesActualizadas, 
-         };
-         modificarEstudiante(estudiante_modificado);
+        };
+        modificarEstudiante(estudiante_modificado);
           
-       }
+      }
     }
- 
-   if (loading) {
-     return <div>Cargando...</div>;
-   }
-   return (
-       <>
-
-       <div className='container'>
-           <div className='up'>
-               <div style={{color: "#4BC3B5", fontSize: "65px", marginBottom: "10px"}}> {grupo.name}</div>
-               <p>{grupo.mision}</p>
-               <p>{grupo.vision}</p>
-               <button id={grupo.id} onClick={ () => handleClick(grupo.id)} 
-               className={`${user.agrupaciones.includes(grupo.id)? 
-               styles.desuscribirse : styles.suscribirse}`}></button>
-       
-           </div>
-           
-           
-          
-           
-       </div>
-
-       </>
-   );
+  if (loading) {
+    return <div>Cargando...</div>;
   }
-  styles
+  return (
+      <>
+
+      <div className='container'>
+          <div className='up'>
+              <div style={{color: "#4BC3B5", fontSize: "65px", marginBottom: "10px"}}> {grupo.name}</div>
+              <p>{grupo.mision}</p>
+              <p>{grupo.vision}</p>
+              {user instanceof Estudiante ? 
+                <button id={grupo.id} onClick={ () => handleClick(grupo.id)} 
+                className={`${user.agrupaciones.includes(grupo.id)? 
+                styles.desuscribirse : styles.suscribirse}`}></button>
+              : null}
+          </div>           
+      </div>
+      </>
+  );
+  }

@@ -156,7 +156,16 @@ export async function modificarEstudiante(user_modificado){
     console.error("Error updating document: ", error);
   }
 }
+export async function modificarAdministrador(user_modificado){
+  try {
+    const id = auth.currentUser.uid;
+    const docRef = doc(db, "administradores", id);
 
+    await setDoc(docRef, user_modificado, { merge: true });
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+}
 // //dado un email, este metodo verificara si hay un email en la base de datos de firebase igual o no
 // export function verificarUsuario(email){
 //   //verifico si es un estudiante
