@@ -41,42 +41,42 @@ export default function CrearGrupo() {
         return <div>Error al cargar los datos</div>;
     }
     
-//     function handleICon(icon) {
-//         console.log(icon);
-//         console.log("prev");
-//         if (icon !== "" ) {
-//             var reader = new FileReader();
-//             reader.onload = function (icon) {
-//             console.log("aqui");
-//             const url = icon.target.result;
-//             setIcon(url);
-//         };
-        
-//    //reader.readAsDataURL(icon);
-//    setIcon(reader.readAsDataURL(icon));
-//     console.log(icon);
-//     console.log("listo");
-//     }
-// }
-
-async function handleIcon(icon) {
-    console.log(icon);
-    console.log("prev");
-    
-    if (icon !== null && icon !== "") {
-        const reader = new FileReader();
-    
-        reader.onload = function (e) {
-            const url = e.target.result;
-            setIcon(url);
-            console.log("asi salio");
-            resolve(url);
-        };
-        console.log("fuera");
+    function handleICon(icon) {
         console.log(icon);
-        reader.readAsDataURL(icon);
-        }
+        console.log("prev");
+        if (icon !== "" ) {
+            var reader = new FileReader();
+            reader.onload = function (icon) {
+            console.log("aqui");
+            const url = icon.target.result;
+            setIcon(url);
+        };
+        
+   //reader.readAsDataURL(icon);
+   setIcon(reader.readAsDataURL(icon));
+    console.log(icon);
+    console.log("listo");
     }
+}
+
+// async function handleIcon(icon) {
+//     console.log(icon);
+//     console.log("prev");
+    
+//     if (icon !== null && icon !== "") {
+//         const reader = new FileReader();
+    
+//         reader.onload = function (e) {
+//             const url = e.target.result;
+//             setIcon(url);
+//             console.log("asi salio");
+//             resolve(url);
+//         };
+//         console.log("fuera");
+//         console.log(icon);
+//         reader.readAsDataURL(icon);
+//         }
+//     }
 
 
     // function handlePictures(fotos) {
@@ -102,7 +102,8 @@ async function handleIcon(icon) {
         // }
 
     async function handleSubmit() {
-    await handleIcon(icon);
+   // await handleIcon(icon);
+   handleICon(icon);
     console.log("submit");
     console.log(icon);
     console.log({name, tipo, mision, vision, pictures, icon});
