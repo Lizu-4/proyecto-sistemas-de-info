@@ -242,6 +242,7 @@ export default function Agrupacion(){
             </div>
            <div className={styles.contribucion_derecha}>
            <input 
+              style={{color:"black"}}
               className={styles.inputBox}
               id='price'
               type="number" 
