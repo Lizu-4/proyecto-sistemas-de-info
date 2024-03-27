@@ -45,5 +45,21 @@ export const routes = [
         path: "/EditarPerfil",
         name: "EditarPerfil",
     },
+    {
+        path: "/EditarGrupo/:id",
+        name: "EditarGrupo",
+    },
+    {
+        path: "/CrearGrupo",
+        name: "CrearGrupo",
+    },
+    {
+        path: "/EditarTipo/:id",
+        name: "EditarTipo",
+    },
+    {
+        path: "/CrearTipo",
+        name: "CrearTipo",
+    }
     
 ] as const 

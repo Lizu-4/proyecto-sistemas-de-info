@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, addDoc } from "firebase/firestore";
 import { db } from "../../firebase"
 import { Grupo } from "../../objetos/Grupo";
 
@@ -38,3 +38,48 @@ export async function getGrupoById(grupoID: string) {
         return null;
         }
     }
+
+export async function deleteGrupo(grupoId: string) {
+    try {
+        console.log({ grupoId });
+        const docRef = doc(db, "grupos", grupoId);
+
+        await deleteDoc(docRef);
+    } catch (error) {
+        console.error("Error removing document: ", error);
+    }
+    }
+
+export async function updateGrupo(grupoId: string, grupoModificado: Object) {
+    try {
+        const docRef = doc(db, "grupos", grupoId);
+
+        await setDoc(docRef, grupoModificado, { merge: true })
+    
+    } catch (error) {
+        console.error("Error updating document: ", error);
+    }
+}
+
+export async function createGrupo({name, tipo, mision, vision, pictures, icon}) {
+    console.log({name, tipo, mision, vision, pictures, icon});
+    
+    try {
+      const colReference = collection(db, "grupos");
+  
+      await addDoc(colReference, {
+        name,
+        tipo,
+        mision,
+        vision,
+        miembros: [],
+        pictures,
+        icon,
+    });
+    
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  }
+
+// name: string, tipo: string, mision:string, vision:string, fotos:string, icon:string

@@ -68,6 +68,7 @@ export default function NavBar() {
           >
             {routes[4].name}
           </NavLink>
+          
 
           {user instanceof Administrador ? 
           
@@ -83,7 +84,24 @@ export default function NavBar() {
             {routes[7].name}
           </NavLink> : null}
 
+          {user && ( 
+      
+          <NavLink onClick={() => logOut()}
+            className={({ isActive }) =>
+              isActive
+                ? styles["nav-link"]
+                : styles["nav-link"]
+            }
+          >
+            Log Out
+          </NavLink>
+
+        )}
+
+
+
       </nav>
+      
       
       :  <nav className={styles.nav}>
       <NavLink
@@ -121,23 +139,11 @@ export default function NavBar() {
     >
       {routes[2].name}
     </NavLink>
+    
     </nav>
       }
 
-     
-        {user && ( 
-         <nav className={styles.nav}>
-          <NavLink onClick={() => logOut()}
-            className={({ isActive }) =>
-              isActive
-                ? `${styles["nav-link"]} ${styles.active}`
-                : styles["nav-link"]
-            }
-          >
-            Log Out
-          </NavLink>
-          </nav>
-        )}
+
 
 
 
