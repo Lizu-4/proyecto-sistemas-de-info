@@ -50,42 +50,6 @@ export default function Agrupacion(){
      getGrupo(id);
    }, [id]);
 
-   function handleClick(id){
-       const elemento = document.getElementById(id);
-       if(user.agrupaciones.includes(id)){
-        const agrupacionesActualizadas = user.agrupaciones.filter(agrupaciones => agrupaciones !== id); // Eliminar el ID de membresias
-        //Modificar usuario
-        const nuevo_user = new Estudiante(user.name,user.email,user.number,user.picture,agrupacionesActualizadas);
-        setUser(nuevo_user);
-        // Agregar una clase al elemento
-        elemento.classList.remove(styles.desuscribirse);
-        elemento.classList.add(styles.suscribirse);
-        const estudiante_modificado = {
-          name: user.name,
-            email: user.email,
-            number:user.number,
-            picture:user.picture,
-            agrupaciones:agrupacionesActualizadas, 
-       };
-       modificarEstudiante(estudiante_modificado);
-       }else{
-          const agrupacionesActualizadas = [...user.agrupaciones, id]  //agregar membresia
-          //Modificar usuario
-          const nuevo_user = new Estudiante(user.name,user.email,user.number,user.picture,agrupacionesActualizadas);
-          setUser(nuevo_user);
-          elemento.classList.remove(styles.suscribirse);
-          elemento.classList.add(styles.desuscribirse);
-          const estudiante_modificado = {
-            name: user.name,
-            email: user.email,
-            number:user.number,
-            picture:user.picture,
-            agrupaciones:agrupacionesActualizadas, 
-         };
-         modificarEstudiante(estudiante_modificado);
-          
-       }
-    }
    function handleClick2(id){
        const elemento = document.getElementById(id);
        if(user.agrupaciones.includes(id)){
