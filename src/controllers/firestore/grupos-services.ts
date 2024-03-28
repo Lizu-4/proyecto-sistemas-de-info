@@ -73,8 +73,8 @@ export async function createGrupo({name, tipo, mision, vision, pictures, icon}) 
         mision,
         vision,
         miembros: [],
-        pictures,
         icon,
+        comentarios: [],
     });
     
     } catch (error) {

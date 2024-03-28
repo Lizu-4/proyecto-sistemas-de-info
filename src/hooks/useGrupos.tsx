@@ -14,7 +14,7 @@ export default function useGrupos() {
         promiseFunction: getGrupos,
         });
 
-        function agregarGrupo(name, tipo, mision, vision, pictures, icon) {
+        function agregarGrupo(name, tipo, mision, vision, icon) {
             if (
                 grupoStatus.status !== "success" 
             )
@@ -28,8 +28,8 @@ export default function useGrupos() {
                     mision: mision,
                     vision: vision,
                     miembros: [],
-                    pictures: pictures,
                     icon: icon,
+                    comentarios: [],
                     id: generateRandomId()
                 },
                 ]);

@@ -11,6 +11,7 @@ import { useUser } from "../context/user";
 import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
 import { modificarEstudiante} from '../controllers/auth';
+import { updateGrupo } from '../controllers/firestore/grupos-services';
 
 import styles from './Grupo.module.css';
 import { Estudiante } from '../objetos/Estudiante';
@@ -22,10 +23,10 @@ export default function Agrupacion(){
 
   // let location = useLocation();
     const { id } = useParams();
-    console.log(id);
     
     const [loading, setLoading] = useState(true);
     const [grupo, setGrupo] = useState(null);
+    const [comentario, setComentario] = useState("");
     const {user,setUser} = useUser();
   
   
@@ -39,6 +40,25 @@ export default function Agrupacion(){
   
       getGrupo(id);
     }, [id]);
+
+    function agregarComentario(){
+      if (comentario !== "") {
+          console.log(comentario);
+        const comentariosActualizados = [...grupo.comentarios, comentario];
+        const grupoActualizado = {
+          name: grupo.name,
+          tipo: grupo.tipo,
+          mision: grupo.mision,
+          vision: grupo.vision,
+          icon: grupo.icon,
+          miembros: grupo.miembros,
+          comentarios:comentariosActualizados
+        }
+        updateGrupo(id, grupoActualizado);
+        setComentario("");
+      }
+      
+    }
 
     function handleClick(id){
         const elemento = document.getElementById(id);
@@ -95,6 +115,20 @@ export default function Agrupacion(){
                 styles.desuscribirse : styles.suscribirse}`}></button>
               : null}
           </div>           
+      </div>
+      <div className='container-comentarios'>
+          <div className='comentarios'>
+              {grupo.comentarios.map((comentario) => (
+                  <div className='comentario'>
+                      <p>{comentario}</p>
+                  </div>
+              ))}
+          </div>
+          <div className='input'>
+          <input type="text" onChange={(ev) => {setComentario(`${user.name}: ${ev.target.value}`)}} />
+         {/* <input type="text" onChange={(ev) => {setComentario(ev.target.value)}} /> */}
+          <button type="submit" onClick={ agregarComentario}>Comentar</button>
+          </div>
       </div>
       </>
   );

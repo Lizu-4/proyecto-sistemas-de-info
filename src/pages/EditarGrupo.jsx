@@ -20,6 +20,7 @@ export default function EditarGrupo() {
     const [pictures, setPictures] = useState([]);
     const [fotos, setFotos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [comentarios, setComentarios] = useState([]);
 
 
     const { id } = useParams();
@@ -35,6 +36,7 @@ export default function EditarGrupo() {
             setMision(grupo.mision);
             setTipo(grupo.tipo);
             setIcon(grupo.icon);
+            setComentarios(grupo.comentarios);
 
 
             }
@@ -72,14 +74,15 @@ export default function EditarGrupo() {
      function handleSubmit() {
    // handleIcon(icon);
   //  handlePictures(fotos);
-    console.log({name, tipo, mision, vision, pictures, icon});
+    console.log({name, tipo, mision, vision, pictures, icon, comentarios});
     const grupoActualizado = {
         name: name,
         tipo: tipo,
         mision: mision,
         vision: vision,
-        pictures: pictures,
-        icon: icon
+        icon: icon,
+        comentarios: comentarios,
+
     }
     updateGrupo(grupo.id, grupoActualizado);
     alert("grupo actualizado");
@@ -143,15 +146,6 @@ export default function EditarGrupo() {
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
                 <br /> */}
                 
-                <label htmlFor="pictures">Fotos:</label>
-                <input type="file"
-                multiple
-                name="pictures"
-                id="pictures"
-                onChange={(ev) => setPictures(ev.target.files)}/>
-
-                <button type="submit" onClick={handleSubmit}>Subir</button>
-
             </div>
         </div>
     </div>

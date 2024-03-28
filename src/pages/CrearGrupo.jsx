@@ -15,7 +15,6 @@ export default function CrearGrupo() {
     const [vision, setVision] = useState("");
     const [icon, setIcon] = useState("");
     const [tipo, setTipo] = useState("");
-    const [pictures, setPictures] = useState([]);
     const [fotos, setFotos] = useState([]);
 
     const {
@@ -41,25 +40,25 @@ export default function CrearGrupo() {
         return <div>Error al cargar los datos</div>;
     }
     
-    function handleICon(icon) {
-        console.log(icon);
-        console.log("prev");
-        if (icon !== "" ) {
-            var reader = new FileReader();
-            reader.onload = function (icon) {
-            console.log("aqui");
-            const url = icon.target.result;
-            setIcon(url);
-        };
+//     function handleICon(icon) {
+//         console.log(icon);
+//         console.log("prev");
+//         if (icon !== "" ) {
+//             var reader = new FileReader();
+//             reader.onload = function (icon) {
+//             console.log("aqui");
+//             const url = icon.target.result;
+//             setIcon(url);
+//         };
         
-   //reader.readAsDataURL(icon);
-   setIcon(reader.readAsDataURL(icon));
-    console.log(icon);
-    console.log("listo");
-    }
-}
+//    //reader.readAsDataURL(icon);
+//    setIcon(reader.readAsDataURL(icon));
+//     console.log(icon);
+//     console.log("listo");
+//     }
+// }
 
-// async function handleIcon(icon) {
+// function handleIcon(icon) {
 //     console.log(icon);
 //     console.log("prev");
     
@@ -79,50 +78,28 @@ export default function CrearGrupo() {
 //     }
 
 
-    // function handlePictures(fotos) {
-    //     fotos.map((event) => {
-    //         const reader = new FileReader();
-    //         reader.onload = function (event) {
-    //             const url = event.target.result;
-    //             const fotos = [...pictures];
-    //             fotos.push(url);
-    //             setPictures(fotos);
-    //         };
-    //     })
-    // }
-        // function handlePictures(fotos) {
-        //     for (const file of fotos) {
-        //     const reader = new FileReader();
-        //     reader.onload = (event) => {
-        //         const url = event.target.result;
-        //         setPictures((prevPictures) => [...prevPictures, url]);
-        //     };
-        //     reader.readAsDataURL(file);
-        //     }
-        // }
-
-    async function handleSubmit() {
-   // await handleIcon(icon);
-   handleICon(icon);
-    console.log("submit");
+    function handleSubmit() {
+    const reader = new FileReader();
     console.log(icon);
-    console.log({name, tipo, mision, vision, pictures, icon});
-
-    await createGrupo({ name, tipo, mision, vision, pictures, icon});
+    reader.onload = async function (e) {
+        const url = e.target.result;
+        console.log({name, tipo, mision, vision, pictures, url});
+        console.log("prev");
+        await createGrupo({ name, tipo, mision, vision, url});
         if (agregarGrupo){
-            agregarGrupo({ name, tipo, mision, vision, pictures, icon});
+            agregarGrupo({ name, tipo, mision, vision, url});
 
         }if (modificarBaseDeDatos){
-        modificarBaseDeDatos({ name, tipo, mision, vision, pictures, icon});
-        }
+        modificarBaseDeDatos({ name, tipo, mision, vision, url});
+        };
+    };reader.readAsDataURL(icon);   
         alert("grupo creado");
-        setName("");
-        setMision("");
-        setVision("");
-        setIcon("");
-        setTipo("");
-        setPictures([]);
-        setFotos([]);
+        // setName("");
+        // setMision("");
+        // setVision("");
+        // setIcon("");
+        // setTipo("");
+        // setFotos([]);
     }
 
 
@@ -179,13 +156,6 @@ export default function CrearGrupo() {
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
                 <br />
                 
-                <label htmlFor="pictures">Fotos:</label>
-                <input type="file"
-                multiple
-                name="pictures"
-                id="pictures"
-                onChange={(ev) => setPictures(ev.target.files)}/>
-
                 <button type="submit" onClick={handleSubmit}>Subir</button>
 
             </div>

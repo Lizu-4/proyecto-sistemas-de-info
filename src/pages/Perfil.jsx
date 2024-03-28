@@ -57,7 +57,7 @@ export default function Perfil() {
         </div>
         <div className={styles.segundo_div_de_parte_superior}>
         <Link to="/EditarPerfil">
-            <button className={styles.button}>Editar Perfil</button>
+            <button  Name={styles.button}>Editar Perfil</button>
         </Link>
         </div>
       </div>
