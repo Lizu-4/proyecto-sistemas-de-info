@@ -52,25 +52,7 @@ export default function Agrupacion(){
     }, [id]);
 
 
-    function agregarComentario(){
-      if (comentario !== "") {
-          console.log(comentario);
-        const comentariosActualizados = [...grupo.comentarios, comentario];
-        const grupoActualizado = {
-          name: grupo.name,
-          tipo: grupo.tipo,
-          mision: grupo.mision,
-          vision: grupo.vision,
-          icon: grupo.icon,
-          miembros: grupo.miembros,
-          comentarios:comentariosActualizados
-        }
-        updateGrupo(id, grupoActualizado);
-        setComentario("");
-      }
-      
-    }
-
+9
 
 
    function handleClick2(id){
@@ -167,11 +149,14 @@ export default function Agrupacion(){
                <div style={{ fontSize: "65px",fontWeight: "bolder"}}> 
                 <p>{grupo.name}</p>
                 <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
-                <button 
-                id={grupo.id} 
-                onClick={ () => handleClick2(grupo.id)} 
-                className={`${user.agrupaciones.includes(grupo.id)? styles.desuscribirse : styles.suscribirse}`}>
-               </button>
+                {user instanceof Estudiante ?
+                 <button 
+                 id={grupo.id} 
+                 onClick={ () => handleClick2(grupo.id)} 
+                 className={`${user.agrupaciones.includes(grupo.id)? styles.desuscribirse : styles.suscribirse}`}>
+                </button>: 
+                 null}
+                
                </div>
        
            </div>
