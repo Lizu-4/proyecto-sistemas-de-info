@@ -37,6 +37,7 @@ export default function Agrupacion(){
    const [loading, setLoading] = useState(true);
    const [grupo, setGrupo] = useState(null);
    const {user,setUser} = useUser();
+   const [feedback,setFeedback] = useState();
  
  
    useEffect(() => {
@@ -75,16 +76,17 @@ export default function Agrupacion(){
           }
         }
         console.log(miembrosActualizados)
-        const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,miembrosActualizados, grupo.fotos, grupo.icon);
+        const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,miembrosActualizados, grupo.icon,grupo.comentarios,grupo.disponible);
         setGrupo(nuevo_grupo);
         const grupo_modificado = {
-          icon: grupo.icon,
-          miembros: miembrosActualizados,
-          mision:grupo.mision,
           name:grupo.name,
-          pictures:(grupo.fotos !== undefined?grupo.fotos:""),
           tipo: grupo.tipo,
-          vision:grupo.vision
+          mision:grupo.mision,
+          vision:grupo.vision,
+          miembros: miembrosActualizados,
+          icon: grupo.icon,
+          comentarios: grupo.comentarios,
+          disponible: grupo.disponible
         }
         modificarGrupo(grupo.id,grupo_modificado);
        }else{
@@ -103,16 +105,17 @@ export default function Agrupacion(){
          };
          modificarEstudiante(estudiante_modificado);
          const miembrosActualizados = [...grupo.miembros, estudiante_modificado];
-         const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,miembrosActualizados, grupo.fotos, grupo.icon);
-          setGrupo(nuevo_grupo);
-          const grupo_modificado = {
-            icon: grupo.icon,
-            miembros: miembrosActualizados,
-            mision:grupo.mision,
+         const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,miembrosActualizados, grupo.icon,grupo.comentarios,grupo.disponible);
+         setGrupo(nuevo_grupo);
+         const grupo_modificado = {
             name:grupo.name,
-            pictures:(grupo.fotos !== undefined?grupo.fotos:""),
             tipo: grupo.tipo,
-            vision:grupo.vision
+            mision:grupo.mision,
+            vision:grupo.vision,
+            miembros: miembrosActualizados,
+            icon: grupo.icon,
+            comentarios: grupo.comentarios,
+            disponible: grupo.disponible
           }
           modificarGrupo(grupo.id,grupo_modificado);
        }
@@ -130,6 +133,35 @@ export default function Agrupacion(){
     const color = `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
   
     return color;
+  }
+  function agregarFeedback(){
+    if(feedback === ""){
+      alert("Debes colocar algun comentario");
+    }else if(user.agrupaciones.includes(grupo.id) === false){
+      alert("Solo los miembros pueden agregar un feedback");
+    }else{
+      const nuevo_comentario = {
+        name: user.name,
+        comentario: feedback
+      }
+      const comentariosActualizados = [...grupo.comentarios, nuevo_comentario];
+      const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,grupo.miembros, grupo.icon,comentariosActualizados,grupo.disponible);
+      setGrupo(nuevo_grupo);
+      const grupo_modificado = {
+            name:grupo.name,
+            tipo: grupo.tipo,
+            mision:grupo.mision,
+            vision:grupo.vision,
+            miembros: grupo.miembros,
+            icon: grupo.icon,
+            comentarios: comentariosActualizados,
+            disponible: grupo.disponible
+      }
+      modificarGrupo(grupo.id,grupo_modificado);
+      setFeedback("");
+      document.getElementById("input_agregar_feedback").value = "";
+      alert("Tu feedback se ha guardado con exito")
+    }
   }
    return (
        <>
@@ -169,6 +201,56 @@ export default function Agrupacion(){
                 <AccordionDetails style={{color:"black"}}>
                   <Typography>
                     {grupo.vision}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion style={{color:"white", marginTop:"1%"}}>
+                <AccordionSummary style={{backgroundColor:"#000A62"}} expandIcon={<ExpandMoreIcon style={{ color: 'white' }}/>}>
+                  <Typography>Feedbacks</Typography>
+                </AccordionSummary>
+                <AccordionDetails style={{color:"black"}}>
+                  <Typography>
+                  {grupo.comentarios !== null?(
+                  <List
+                      sx={{
+                        width: '100%',
+                        maxWidth: 360,
+                        bgcolor: 'background.paper',
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: 300,
+                        '& ul': { padding: 0 },
+                      }}
+                      subheader={<li />}
+                    >
+                      {grupo.comentarios.map((miembro) => (
+                        <li key={miembro.comentario}>
+                          <ul>
+                          <ListItem alignItems="flex-start">
+                            <ListItemAvatar>
+                              <Avatar style={{ backgroundColor: getRandomColor() }}>{miembro.name.charAt(0).toUpperCase()}</Avatar>
+                            </ListItemAvatar>
+                            <ListItemText style={{color:"black"}}
+                              primary={miembro.name}
+                              secondary={
+                                <React.Fragment>
+                                  <Typography
+                                    sx={{ display: 'inline'}}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                  >
+                                    {miembro.comentario}
+                                  </Typography>
+                                </React.Fragment>
+                              }
+                            />
+                          <Divider variant="inset" component="li" />
+                          </ListItem>
+                          </ul>
+                        </li>
+                      ))}
+                    </List>):"Aun no hay feedbacks"}
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -223,13 +305,14 @@ export default function Agrupacion(){
               <h3 style={{ fontWeight: "bolder"}}>Feedback</h3>
               <TextField
                 className={styles.inputBox}
-                id="outlined-multiline-static"
+                id="input_agregar_feedback"
                 label="Feedback"
                 multiline
                 rows={6}
                 variant="filled"
+                onChange={(ev) => setFeedback(ev.target.value)}
               />
-              <button className={styles.button}>Agregar Feedback</button>
+              <button className={styles.button} onClick={() => agregarFeedback()}>Agregar Feedback</button>
               </div>
             </div>
            {/* PAYPAL */}

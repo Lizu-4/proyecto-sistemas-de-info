@@ -6,6 +6,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
 import { createGrupo, updateGrupo, deleteGrupo } from "../controllers/firestore/grupos-services";
+import { crearGrupo} from '../controllers/auth';
 
 export default function CrearGrupo() {
 
@@ -102,27 +103,35 @@ export default function CrearGrupo() {
         // }
 
     async function handleSubmit() {
-   // await handleIcon(icon);
-   handleICon(icon);
-    console.log("submit");
-    console.log(icon);
-    console.log({name, tipo, mision, vision, pictures, icon});
-
-    await createGrupo({ name, tipo, mision, vision, pictures, icon});
-        if (agregarGrupo){
-            agregarGrupo({ name, tipo, mision, vision, pictures, icon});
-
-        }if (modificarBaseDeDatos){
-        modificarBaseDeDatos({ name, tipo, mision, vision, pictures, icon});
+        if (icon !== "" ) {
+            const reader = new FileReader();
+            reader.onload = async function (event) {
+                const url = event.target.result;
+                console.log(url)
+                setIcon(url);
+                const grupo_modificado = {
+                icon: url,
+                miembros: [],
+                mision:mision,
+                name:name,
+                pictures:"",
+                tipo: tipo,
+                vision:vision,
+                comentarios:[],
+                disponible:true
+                }
+                crearGrupo(grupo_modificado);
+                alert("grupo creado");
+                setName("");
+                setMision("");
+                setVision("");
+                setIcon("");
+                setTipo("");
+                setPictures([]);
+                setFotos([]);
+            };
+            reader.readAsDataURL(icon);
         }
-        alert("grupo creado");
-        setName("");
-        setMision("");
-        setVision("");
-        setIcon("");
-        setTipo("");
-        setPictures([]);
-        setFotos([]);
     }
 
 

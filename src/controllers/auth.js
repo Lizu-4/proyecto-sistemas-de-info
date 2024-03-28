@@ -247,3 +247,11 @@ export async function modificarGrupo(id_grupo,grupo_modificado){
     console.error("Error updating document: ", error);
   }
 }
+export async function crearGrupo(grupo_modificado){
+  try {
+    const gruposCollection = collection(db,'grupos'); 
+    await addDoc(gruposCollection,grupo_modificado);
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+}
