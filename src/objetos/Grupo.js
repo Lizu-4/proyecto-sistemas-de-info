@@ -1,10 +1,12 @@
-export function Grupo(id,name,tipo,mision,vision,miembros, fotos, icon) {
+export function Grupo(id,name,tipo,mision,vision,miembros, icon, comentarios,disponible) {
     this.id = id;
     this.name = name;
     this.tipo = tipo;
     this.mision = mision;
     this.vision = vision;
     this.miembros = miembros;
-    this.fotos = fotos;
     this.icon = icon;
+    this.comentarios = comentarios;
+    this.disponible = disponible;
 }
+

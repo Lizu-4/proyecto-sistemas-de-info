@@ -12,6 +12,7 @@
     cursor: pointer; /* Cambiar el cursor al pasar el ratón */
     border-radius: 8px; /* Radio de borde */
     content: "Suscribirse";
+    width: 100%;
   }
   
   .desuscribirse {
@@ -28,6 +29,7 @@
     cursor: pointer; /* Cambiar el cursor al pasar el ratón */
     border-radius: 8px; /* Radio de borde */
     content: "Desuscribirse";
+    width: 100%;
   }
   .desuscribirse::after {
     content: "Desuscribirse"; /* Agregar el texto deseado */
@@ -37,3 +39,78 @@
     content: "Suscribirse"; /* Agregar el texto deseado */
     /* Estilos adicionales para el texto */
   }
+.up{
+  display: flex;
+  flex-direction: row;
+}
+.paypal{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1%;
+  background-color: rgb(238, 235, 235);
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.paypal > div {
+  flex-basis: 50%;
+}
+.contribucion_derecha{
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}
+.inputBox {
+  width: 100%;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+  margin-bottom: 1%;
+  color: white;
+  background-color: white;
+}
+.button{
+  border: none;
+  background: orange;
+  color: white;
+  width: 100%;
+  height: 14%;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bolder;
+  margin-top: 1%;
+  padding: 2%;
+}
+.miembros_y_feedback{
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 2%;
+  margin-top: 1%;
+  background-color: #000A62;
+  border-radius: 6px;
+}
+.miembros_y_feedback > div {
+  flex-basis: 50%;
+}
+.miembros{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  border-radius: 6px;
+  margin-left: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.feedback{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  border-radius: 6px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}

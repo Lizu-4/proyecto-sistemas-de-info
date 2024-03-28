@@ -12,6 +12,10 @@ import RecuperarClave from "./pages/RecuperarClave.jsx";
 import Grupo from "./pages/Grupo.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import EditarPerfil from "./pages/EditarPerfil.jsx";
+import EditarGrupo from "./pages/EditarGrupo.jsx";
+import CrearGrupo from "./pages/CrearGrupo.jsx";
+import CrearTipo from "./pages/CrearTipo.jsx";
+import EditarTipo from "./pages/EditarTipo.jsx";
 
 
 
@@ -66,7 +70,22 @@ export const router = createBrowserRouter([
         path: routes[8].path,
         element: <EditarPerfil />,
       },
-
+      {
+        path: routes[9].path,
+        element: <EditarGrupo />,
+      },
+      {
+        path: routes[10].path,
+        element: <CrearGrupo />,
+      },
+      {
+        path: routes[11].path,
+        element: <CrearTipo />,
+      },
+      {
+        path: routes[12].path,
+        element: <EditarTipo />,
+      }
     ],
   },
 ]);

@@ -51,8 +51,16 @@ export default function useFecth<TipoData>({
         getData();
     }, []);
 
+    function modificarBaseDeDatos(data: any) {
+        setFetchingStatus({
+          status: "success",
+          data,
+        });
+      }
+
 
     return {
         fetchingStatus,
+        modificarBaseDeDatos,  
     };
     }
