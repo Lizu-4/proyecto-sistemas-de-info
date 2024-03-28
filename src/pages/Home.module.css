@@ -1,0 +1,93 @@
+.container {
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #000A62;
+    color: white;
+    padding: 20px;
+  }
+  .headerr {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #000A62;
+    color: white;
+    padding: 20px;
+  }
+  .img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin-bottom: 20px;
+   
+    padding: 20px;
+  }
+  .missionImage {
+    float: right; /* Coloca la imagen a la derecha del texto */
+    margin-left: 20px; /* Añade un margen izquierdo para separar la imagen del texto */
+    width: 300px; /* Ajusta el ancho de la imagen según tus necesidades */
+    height: auto; /* Ajusta la altura de la imagen de forma automática */
+  }
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: black; /* Cambia el color del texto a blanco */
+  }
+  .titlee {
+    font-size: 24px;
+    font-weight: bold;
+    color: white; /* Cambia el color del texto a blanco */
+  }
+  section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white; 
+
+  }
+  .sectionn {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white; 
+
+  }
+  sectionnn{
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+
+  .h1 {
+    color: black; /* Cambia el color del texto a blanco */
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .p {
+    color: black; /* Cambia el color del texto a blanco */
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .p1 {
+    color: white; /* Cambia el color del texto a blanco */
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .btnOrange {
+    background-color: orange;
+    color: white;
+  }
+  
+  .main {
+    padding: 20px;
+  }
+
+  
+  .mission-image {
+    flex: 0 0 40%;
+    padding-left: 40px;
+  }
+  
