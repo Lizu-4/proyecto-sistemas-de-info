@@ -26,12 +26,6 @@ export default function Dashboard() {
       const {
         grupoStatus, agregarGrupo, modificarBaseDeDatos, eliminarGrupo 
       } = useGrupos();
-    
-      const tipos = tipoStatus.data;
-
-      
-      const grupos = grupoStatus.data;
-
 
         useEffect(() => {
           if (grupoStatus.status === "success")
@@ -47,14 +41,10 @@ export default function Dashboard() {
       function borrarGrupo(id) {
         console.log({id});
         eliminarGrupo(id);
-        const agrupacionesFiltradas = agrupaciones.filter((grupo) => grupo.id !== id);
-        setAgrupaciones(agrupacionesFiltradas);
       }
 
       function borrarTipo(id) {
         console.log({id});
-        const tiposFiltrados = types.filter((tipo) => tipo.id !== id);
-        setTiypes(tiposFiltrados);
         eliminarTipo(id);
       }
     

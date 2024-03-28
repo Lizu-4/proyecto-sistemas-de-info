@@ -3,13 +3,14 @@ import { Grupo } from '../objetos/Grupo';
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
-import { getGrupoById } from "../controllers/firestore/grupos-services";
+import { useGrupo } from "../hooks/grupos";
 import { auth } from '../firebase';
 import { useState, useEffect } from 'react';
 import { useUser } from "../context/user";
 import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
-import { modificarEstudiante, modificarGrupo} from '../controllers/auth';
+import { modificarGrupo} from '../controllers/firestore/grupos';
+import { modificarEstudiante } from '../controllers/auth'
 import { Estudiante } from '../objetos/Estudiante';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -34,22 +35,20 @@ export default function Agrupacion(){
    const { id } = useParams();
    console.log(id);
    
-   const [loading, setLoading] = useState(true);
-   const [grupo, setGrupo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  //const [grupo, setGrupo] = useState(null);
    const {user,setUser} = useUser();
    const [feedback,setFeedback] = useState();
- 
+
+   const grupo = useGrupo(id);
  
    useEffect(() => {
-     async function getGrupo(id) {
-       setLoading(true);
-       const grupo = await getGrupoById(id);
-       setLoading(false);
-       setGrupo(grupo);
-     }
+    if (grupo) {
+      setLoading(false);
+    }
+    
+  }, [grupo]);
  
-     getGrupo(id);
-   }, [id]);
 
    function handleClick2(id){
        const elemento = document.getElementById(id);
@@ -123,6 +122,7 @@ export default function Agrupacion(){
    if (loading) {
      return <div>Cargando...</div>;
    }
+
    function getRandomColor() {
     // Generar valores aleatorios para los componentes RGB
     const red = Math.floor(Math.random() * 256);
@@ -168,17 +168,20 @@ export default function Agrupacion(){
 
        <div className='container'>
            <div className={styles.up}>
+            
                <div style={{width:"50%"}}>
-                  <img src={grupo.icon} style={{ maxWidth: "100%", maxHeight:"100%"}}/> 
+                  <img src={grupo.icon} style={{ width: "100%", height:"100%", objectFit: 'fill'}}/> 
                </div>
-               <div style={{ fontSize: "65px",fontWeight: "bolder"}}> 
-                <p>{grupo.name}</p>
-                <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
-                <button 
-                id={grupo.id} 
-                onClick={ () => handleClick2(grupo.id)} 
-                className={`${user.agrupaciones.includes(grupo.id)? styles.desuscribirse : styles.suscribirse}`}>
-               </button>
+               <div style={{ fontSize: "65px",fontWeight: "bolder", marginLeft: "auto", marginRight: "auto"}}> 
+                  <p style={{textAlign: "center"}}>{grupo.name}</p>
+                  <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
+                  {user instanceof Estudiante ? 
+                  <button 
+                  id={grupo.id} 
+                  onClick={ () => handleClick2(grupo.id)} 
+                  className={`${user.agrupaciones.includes(grupo.id)? styles.desuscribirse : styles.suscribirse}`}>
+                  </button>
+                  : null}
                </div>
        
            </div>
@@ -254,6 +257,8 @@ export default function Agrupacion(){
                   </Typography>
                 </AccordionDetails>
               </Accordion>
+
+              
            </div>
            {/* CARRUSEL */}
            <div></div>
@@ -303,6 +308,7 @@ export default function Agrupacion(){
               </div>
               <div className={styles.feedback}>
               <h3 style={{ fontWeight: "bolder"}}>Feedback</h3>
+              
               <TextField
                 className={styles.inputBox}
                 id="input_agregar_feedback"

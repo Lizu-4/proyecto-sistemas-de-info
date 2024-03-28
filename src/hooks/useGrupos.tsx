@@ -49,22 +49,12 @@ export default function useGrupos() {
 
             modificarGrupos(nuevosGrupos);
         }
-
-
-            
-            
-            
-
         return {
             grupoStatus,
             agregarGrupo,
             eliminarGrupo,
 
         };
-
-
-
-
 
     }
 
