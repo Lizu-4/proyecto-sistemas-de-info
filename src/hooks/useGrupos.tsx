@@ -30,6 +30,7 @@ export default function useGrupos() {
                     miembros: [],
                     icon: icon,
                     comentarios: [],
+                    disponible: false,
                     id: generateRandomId()
                 },
                 ]);

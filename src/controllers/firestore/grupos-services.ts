@@ -61,8 +61,7 @@ export async function updateGrupo(grupoId: string, grupoModificado: Object) {
     }
 }
 
-export async function createGrupo({name, tipo, mision, vision, pictures, icon}) {
-    console.log({name, tipo, mision, vision, pictures, icon});
+export async function createGrupo({name, tipo, mision, vision, icon}) {
     
     try {
       const colReference = collection(db, "grupos");
@@ -74,6 +73,7 @@ export async function createGrupo({name, tipo, mision, vision, pictures, icon}) 
         vision,
         miembros: [],
         icon,
+        disponible: false,
         comentarios: [],
     });
     
