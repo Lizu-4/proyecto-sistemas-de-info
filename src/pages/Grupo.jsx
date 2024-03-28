@@ -12,9 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
 import { modificarEstudiante} from '../controllers/auth';
 import { updateGrupo } from '../controllers/firestore/grupos-services';
-
 import styles from './Grupo.module.css';
 import { Estudiante } from '../objetos/Estudiante';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 
 
 
@@ -104,32 +105,22 @@ export default function Agrupacion(){
   return (
       <>
 
-      <div className='container'>
-          <div className='up'>
-              <div style={{color: "#4BC3B5", fontSize: "65px", marginBottom: "10px"}}> {grupo.name}</div>
-              <p>{grupo.mision}</p>
-              <p>{grupo.vision}</p>
-              {user instanceof Estudiante ? 
+        <div className='container'>
+            <div className='up'>
+                <div style={{color: "#4BC3B5", fontSize: "65px", marginBottom: "10px"}}> {grupo.name}</div>
+                <p>{grupo.mision}</p>
+                <p>{grupo.vision}</p>
                 <button id={grupo.id} onClick={ () => handleClick(grupo.id)} 
                 className={`${user.agrupaciones.includes(grupo.id)? 
                 styles.desuscribirse : styles.suscribirse}`}></button>
-              : null}
-          </div>           
-      </div>
-      <div className='container-comentarios'>
-          <div className='comentarios'>
-              {grupo.comentarios.map((comentario) => (
-                  <div className='comentario'>
-                      <p>{comentario}</p>
-                  </div>
-              ))}
-          </div>
-          <div className='input'>
-          <input type="text" onChange={(ev) => {setComentario(`${user.name}: ${ev.target.value}`)}} />
-         {/* <input type="text" onChange={(ev) => {setComentario(ev.target.value)}} /> */}
-          <button type="submit" onClick={ agregarComentario}>Comentar</button>
-          </div>
-      </div>
-      </>
-  );
+        
+            </div>
+            
+            
+            
+            
+        </div>
+
+        </>
+    );
   }

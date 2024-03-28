@@ -1,6 +1,7 @@
 import styles from './Registro.module.css';
 import { useState } from 'react';
-import { ingresarGoogleAdmi, registerWithCredentialsAdmi } from '../controllers/auth';
+import { ingresarFacebookAdmi, ingresarGoogleAdmi, registerWithCredentialsAdmi } from '../controllers/auth';
+import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons';
 
 export default function RegistroAdministrador() {
     const [email,setEmail] = useState("");
@@ -101,8 +102,8 @@ export default function RegistroAdministrador() {
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
             <div>
                 <hr className={styles.linea_horizontal}/>
-                <button onClick={() => ingresarGoogleAdmi()}>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <GoogleLoginButton onClick={() => ingresarGoogleAdmi()}></GoogleLoginButton>
+                <FacebookLoginButton onClick={() => ingresarFacebookAdmi()}></FacebookLoginButton>
             </div>
         </div>
     </div>

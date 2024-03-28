@@ -3,7 +3,8 @@ import logo from '../img/UNIMET_neg.png';
 import styles from './Ingresar.module.css';
 import { useState } from 'react';
 import { useUser } from '../context/user';
-import { loginWithCredentials,ingresarGoogleEstudiante } from '../controllers/auth';
+import { loginWithCredentials,ingresarGoogleEstudiante,ingresarFacebookEstudiante } from '../controllers/auth';
+import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons';
 
 export default function Ingresar() {
     const {user, setUser} = useUser();
@@ -57,6 +58,17 @@ export default function Ingresar() {
         }
     }
 
+    async function botonIniciarSesionFacebook(){
+        //Si user == null entonces no hay sesion iniciada.En caso contrario hay una sesion iniciada.
+        if( user == null){
+            //verifica las credenciales y de ser validas, cambiara el estado de user,en caso de ser un nuevo usuario lo registrara como estudiante
+            ingresarFacebookEstudiante();
+
+        }else{
+            alert("Actualmente hay una sesion iniciada.Cierra sesion para iniciar con otro usuario.");
+        }
+    }
+
     return (
     <div className={styles.div_principal}>
         <div>{/**PARTE IZQUIERDA(IMAGEN) */}
@@ -66,13 +78,14 @@ export default function Ingresar() {
             {/**ENCABEZADO */}
             <div className={styles.encabezado}>
                 <img width="40%" height="40%"  src={logo} ></img>
-                <p>BIENVENIDO</p>
+                <p style={{ fontWeight: "bolder" }}>BIENVENIDO</p>
             </div>
             {/**INPUTS */}
             <div className={styles.div_inputs}>
                 <input 
                 type="text" 
                 placeholder="Email"
+                className={styles.inputBox}
                 onChange={(ev) => setEmail(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{emailError}</label>
@@ -80,21 +93,20 @@ export default function Ingresar() {
                 <input 
                 type="text" 
                 placeholder="Contraseña"
+                className={styles.inputBox}
                 onChange={(ev) => setPassword(ev.target.value)}
                 />
                 <label className={styles.errorLabel}>{passwordError}</label>
-            </div>
-            {/**ENLACES A OTRAS PAGINAS */}
-            <div className={styles.div_enlaces}>
-                <a href="/RecuperarClave">¿Olvidaste tu contraseña?</a>
-                <button onClick={() => botonIniciarSesion()}>Iniciar sesion</button>
-                <a href="/Registrar">Crear Mi Cuenta</a>
+                <a href="/RecuperarClave" style={{ color: "white" }}>¿Olvidaste tu contraseña?</a>
+                <br />
+                <button className={styles.button} onClick={() => botonIniciarSesion()}>Iniciar sesion</button>
             </div>
             {/**INICIO DE SESION MEDIANTE PROVEEDORES */}
             <div>
+                <a href="/Registrar" style={{ color: "orange",fontWeight: "bolder" }}>Crear Mi Cuenta</a>
                 <hr className={styles.linea_horizontal}/>
-                <button onClick={() => botonIniciarSesionGoogle()}>GOOGLE</button>
-                <button>FACEBOOK</button>
+                <GoogleLoginButton onClick={() => botonIniciarSesionGoogle()}></GoogleLoginButton>
+                <FacebookLoginButton onClick={() => botonIniciarSesionFacebook()}></FacebookLoginButton>
             </div>
         </div>
     </div>
