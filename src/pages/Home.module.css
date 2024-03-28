@@ -28,20 +28,20 @@
     padding: 20px;
   }
   .missionImage {
-    float: right; /* Coloca la imagen a la derecha del texto */
-    margin-left: 20px; /* Añade un margen izquierdo para separar la imagen del texto */
-    width: 300px; /* Ajusta el ancho de la imagen según tus necesidades */
-    height: auto; /* Ajusta la altura de la imagen de forma automática */
+    float: right; 
+    margin-left: 20px; 
+    width: 300px; 
+    height: auto; 
   }
   .title {
     font-size: 24px;
     font-weight: bold;
-    color: black; /* Cambia el color del texto a blanco */
+    color: black;
   }
   .titlee {
     font-size: 24px;
     font-weight: bold;
-    color: white; /* Cambia el color del texto a blanco */
+    color: white; 
   }
   section {
     margin-bottom: 20px;
@@ -61,18 +61,18 @@
   }
 
   .h1 {
-    color: black; /* Cambia el color del texto a blanco */
+    color: black; 
     font-size: 24px;
     font-weight: bold;
   }
   
   .p {
-    color: black; /* Cambia el color del texto a blanco */
+    color: black; 
     font-size: 16px;
     line-height: 1.5;
   }
   .p1 {
-    color: white; /* Cambia el color del texto a blanco */
+    color: white;
     font-size: 16px;
     line-height: 1.5;
   }
