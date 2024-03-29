@@ -3,15 +3,15 @@ import { Grupo } from '../objetos/Grupo';
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
-import { useGrupo } from "../hooks/grupos";
+import { getGrupoById } from "../controllers/firestore/grupos-services";
 import { auth } from '../firebase';
 import { useState, useEffect } from 'react';
 import { useUser } from "../context/user";
 import { useNavigate } from 'react-router-dom';
 import cargando from '../img/cargando.gif';
-import { modificarGrupo} from '../controllers/firestore/grupos';
-import { modificarEstudiante } from '../controllers/auth'
+import { modificarEstudiante, modificarGrupo} from '../controllers/auth';
 import { Estudiante } from '../objetos/Estudiante';
+import {Administrador} from '../objetos/Administrador';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import styles from './Grupo.module.css';
@@ -35,22 +35,28 @@ export default function Agrupacion(){
    const { id } = useParams();
    console.log(id);
    
-
+   const [loading, setLoading] = useState(true);
+   const [grupo, setGrupo] = useState(null);
    const {user,setUser} = useUser();
    const [feedback,setFeedback] = useState();
-   const [loading, setLoading] = useState(true);
-
-   const grupo = useGrupo(id);
+ 
  
    useEffect(() => {
-    if (grupo) {
-      setLoading(false);
-    }
-    
-  }, [grupo]);
+     async function getGrupo(id) {
+       setLoading(true);
+       const grupo = await getGrupoById(id);
+       setLoading(false);
+       setGrupo(grupo);
+     }
  
+     getGrupo(id);
+   }, [id]);
 
    function handleClick2(id){
+       if(grupo.disponible === false){
+          alert("El grupo se encuentra inhabilitado");
+          return;
+       }
        const elemento = document.getElementById(id);
        if(user.agrupaciones.includes(id)){
         const agrupacionesActualizadas = user.agrupaciones.filter(agrupaciones => agrupaciones !== id); // Eliminar el ID de membresias
@@ -120,7 +126,11 @@ export default function Agrupacion(){
        }
     }
    if (loading) {
-     return <div>Cargando...</div>;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+        <img width="40%" height="20%" src={cargando}/>
+      </div>
+    );
    }
 
    function getRandomColor() {
@@ -135,6 +145,12 @@ export default function Agrupacion(){
     return color;
   }
   function agregarFeedback(){
+    if(user instanceof Administrador){
+      alert("Los administradores no pueden agregar feedbacks");
+      setFeedback("");
+      document.getElementById("input_agregar_feedback").value = "";
+      return;
+    }
     if(feedback === ""){
       alert("Debes colocar algun comentario");
     }else if(user.agrupaciones.includes(grupo.id) === false){
@@ -163,16 +179,16 @@ export default function Agrupacion(){
       alert("Tu feedback se ha guardado con exito")
     }
   }
-   return (
-       <>
+  return (
+        <>
 
-       <div className='container'>
-           <div className={styles.up}>
+        <div className='container'>
+            <div className={styles.up}>
             
-               <div style={{width:"50%"}}>
+                <div style={{width:"50%"}}>
                   <img src={grupo.icon} style={{ width: "100%", height:"100%", objectFit: 'fill'}}/> 
-               </div>
-               <div style={{ fontSize: "65px",fontWeight: "bolder", marginLeft: "auto", marginRight: "auto"}}> 
+                </div>
+                <div style={{ fontSize: "65px",fontWeight: "bolder", marginLeft: "auto", marginRight: "auto"}}> 
                   <p style={{textAlign: "center"}}>{grupo.name}</p>
                   <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
                   {user instanceof Estudiante ? 
@@ -182,11 +198,11 @@ export default function Agrupacion(){
                   className={`${user.agrupaciones.includes(grupo.id)? styles.desuscribirse : styles.suscribirse}`}>
                   </button>
                   : null}
-               </div>
-       
-           </div>
-           {/* MISION Y VISION */}
-           <div>
+                </div>
+        
+            </div>
+            {/* MISION Y VISION */}
+            <div>
               <Accordion style={{marginBottom:"1%",color:"white"}}>
                 <AccordionSummary style={{backgroundColor:"#000A62"}} expandIcon={<ExpandMoreIcon style={{ color: 'white' }}/>}>
                   <Typography>Mision</Typography>
@@ -259,11 +275,11 @@ export default function Agrupacion(){
               </Accordion>
 
               
-           </div>
-           {/* CARRUSEL */}
-           <div></div>
-           <div className={styles.miembros_y_feedback}>
-           <div className={styles.miembros}>
+            </div>
+            {/* CARRUSEL */}
+            <div></div>
+            <div className={styles.miembros_y_feedback}>
+            <div className={styles.miembros}>
             <h3 style={{ fontWeight: "bolder"}}>Miembros</h3>
             <List
                 sx={{
@@ -321,16 +337,16 @@ export default function Agrupacion(){
               <button className={styles.button} onClick={() => agregarFeedback()}>Agregar Feedback</button>
               </div>
             </div>
-           {/* PAYPAL */}
-           <div className={styles.paypal}>
+            {/* PAYPAL */}
+            <div className={styles.paypal}>
             <div style={{marginLeft:"1%"}}>
               <h1>Contribucion Al Grupo</h1>
               <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
               <br />
               <p>Puedes colaborar con tu agrupación aportando un monto de tu selección</p>
             </div>
-           <div className={styles.contribucion_derecha}>
-           <input 
+            <div className={styles.contribucion_derecha}>
+            <input 
               style={{color:"black"}}
               className={styles.inputBox}
               id='price'
@@ -360,13 +376,13 @@ export default function Agrupacion(){
               />
             </PayPalScriptProvider>
             </div>
-           </div>
-           
+            </div>
+            
           
-           
-       </div>
+            
+        </div>
 
-       </>
-   );
-  }
-  styles
+        </>
+      );
+    }
+    styles

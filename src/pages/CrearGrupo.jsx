@@ -6,6 +6,9 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
 import { crearGrupo} from '../controllers/firestore/grupos';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import cargando from '../img/cargando.gif';
 
 export default function CrearGrupo() {
 
@@ -18,6 +21,13 @@ export default function CrearGrupo() {
     const [icon, setIcon] = useState("");
     const [tipo, setTipo] = useState("");
     const [disponible, setDisponible] = useState(true);
+    const [nameError, setNameError] = useState("");
+    const [misionError, setMisionError] = useState("");
+    const [visionError, setVisionError] = useState("");
+    const [tipoError, setTipoError] = useState("");
+    const [iconError, setIconError] = useState("");
+    const [disponibleError, setDisponibleError] = useState("");
+    const navigate = useNavigate();
 
     const tipos = useTipos();
 
@@ -39,15 +49,54 @@ export default function CrearGrupo() {
       }, [tipos]);
 
       if (loadingGrupos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+        );
       }
 
       if (loadingTipos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+        );
       }
 
 
     async function handleSubmit() {
+        setNameError("");
+        setMisionError("");
+        setVisionError("");
+        setDisponibleError("");
+        setIconError("");
+        setTipoError("");
+        if(name === ""){
+          setNameError("Por favor colocale un Nombre a la agrupacion");
+          return;
+        }
+        if(disponible === ""){
+          setDisponibleError("Por favor selecciona la disponibilidad");
+          return;
+        }
+        if(tipo === ""){
+          setTipoError("Por favor selecciona un Tipo");
+          return;
+        }
+        if(mision === ""){
+          setMisionError("Por favor colocale una Mision a la agrupacion");
+          return;
+        }
+        if(vision === ""){
+          setVisionError("Por favor colocale una Vision a la agrupacion");
+          return;
+        }
+        if(icon === ""){
+          setIconError("Por favor selecciona un icono para la agrupacion");
+          return;
+        }
+        
         if (icon !== "" ) {
             const reader = new FileReader();
             reader.onload = async function (event) {
@@ -64,7 +113,7 @@ export default function CrearGrupo() {
                 comentarios:[],
                 disponible:disponible
                 }
-               // crearGrupo(grupo_modificado);
+               crearGrupo(grupo_modificado);
                console.log(grupo_modificado);
                 alert("grupo creado");
                 setName("");
@@ -72,6 +121,7 @@ export default function CrearGrupo() {
                 setVision("");
                 setIcon("");
                 setTipo("");
+              navigate("/Dashboard");
             };
             reader.readAsDataURL(icon);
         }
@@ -85,75 +135,76 @@ export default function CrearGrupo() {
             {/**FORM */}
             <h1 >Crear grupo</h1>
             <div className={styles.div_inputs}>
-            <label htmlFor="nombre">Nombre:</label>
-            <input 
-                type="text"
-                id="nomnbre"
-                placeholder="Nombre"
-                className={styles.inputBox}
-                onChange={(ev) => setName(ev.target.value)}
-                />
+            <TextField
+                    className={styles.inputBox}
+                    id="Nombre"
+                    label="Nombre"
+                    multiline
+                    onChange={(ev) => setName(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{nameError}</label>
+                <br />
+      
+                <TextField
+                  id="Disponibilidad"
+                  select
+                  label="Disponible?"
+                  defaultValue={true}
+                  onChange={(ev) => setDisponible(ev.target.value)}
+                >
+                    <MenuItem key="true" value={true}>
+                      Si
+                    </MenuItem>
+                    <MenuItem key="false" value={false}>
+                      No
+                    </MenuItem>
+                </TextField>
+                <label style={{color:"red",fontSize:"12px"}}>{disponibleError}</label>
+                <br />
+                <TextField
+                  id="Tipos"
+                  select
+                  label="Tipo"
+                  onChange={(ev) => setTipo(ev.target.value)}
+                >
+                  {tipos.map((type) => (
+                    <MenuItem key={type.nombre} value={type.nombre}>
+                      {type.nombre}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <label style={{color:"red",fontSize:"12px"}}>{tipoError}</label>
+                <br />
 
-            <label>
-                    ¿Disponible?
-                    <br />
-                    <input
-                    type="radio"
-                    name="agree"
-                    value={true}
-                    onChange={(event) => setDisponible(true)}
-                    
-                    />
-                    Sí
-                </label>
-                <label>
-                    <input
-                    type="radio"
-                    name="agree"
-                    value={false}
-                    onChange={(event) => setDisponible(false)}
-                    />
-                    No
-                </label>
-                        
-            
+                <TextField
+                    className={styles.inputBox}
+                    id="mision"
+                    label="Mision"
+                    multiline
+                    onChange={(ev) => setMision(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{misionError}</label>
+                <br />
 
-                <label htmlFor="Tipos">Tipos:</label>
-                <select className={styles.inputBox} name="Tipos" id="Tipos" onChange={(ev) => setTipo(ev.target.value)}>
-                {tipos.map((type) => (
-                        <option  value={type.nombre}>{type.nombre}</option>
-                        ))}
-                </select>
-                
-                <label htmlFor="mision">Mision:</label>
-                <input 
-                id="mision"
-                type="text" 
-                placeholder="Mision"
-                className={styles.inputBox}
-                onChange={(ev) => setMision(ev.target.value)}
-                />
-                
-
-               
-                <label htmlFor="vision">Vision:</label>
-                <input 
-                type="text" 
-                id="vision"
-                placeholder="Vision"
-                className={styles.inputBox}
-                onChange={(ev) => setVision(ev.target.value)}
-                />
+                <TextField
+                    className={styles.inputBox}
+                    id="vision"
+                    label="Vision"
+                    multiline
+                    onChange={(ev) => setVision(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{visionError}</label>
                 <br />
 
                 <label htmlFor="icon">Icon del grupo:</label>
-                <input type="file" 
+                <input
+                type="file"
                 name="icon" 
                 id="icon" 
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
+                <label style={{color:"red",fontSize:"12px"}}>{iconError}</label>
                 <br />
-
-                <button type="submit" onClick={handleSubmit}>Subir</button>
+                <button type="submit" onClick={handleSubmit}>Crear Grupo</button>
 
             </div>
         </div>

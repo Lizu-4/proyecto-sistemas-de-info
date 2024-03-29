@@ -14,6 +14,15 @@ export default function Registar() {
     elemento.className = `${styles["nav-link"]} ${styles.active}`;
     navigate(routes[3]["children"][0].path);
   }, []);
+
+    //cada vez que el auth cambie pasara por aqui
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+            navigate("/");
+        }
+        });
+    }, []);
     return (
         <div className={styles.d}>
             <header className={styles.header}>

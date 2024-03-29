@@ -7,6 +7,9 @@ import {useGrupos, useGrupo} from "../hooks/grupos";
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
 import { modificarGrupo } from "../controllers/firestore/grupos";
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import cargando from '../img/cargando.gif';
 
 export default function EditarGrupo() {
 
@@ -18,6 +21,13 @@ export default function EditarGrupo() {
     const [icon, setIcon] = useState("");
     const [tipo, setTipo] = useState("");
     const [disponible, setDisponible] = useState(true);
+    const [nameError, setNameError] = useState("");
+    const [misionError, setMisionError] = useState("");
+    const [visionError, setVisionError] = useState("");
+    const [tipoError, setTipoError] = useState("");
+    const [iconError, setIconError] = useState("");
+    const [disponibleError, setDisponibleError] = useState("");
+    const navigate = useNavigate();
 
     const tipos = useTipos();
 
@@ -48,20 +58,54 @@ export default function EditarGrupo() {
       }, [tipos]);
 
       if (loadingGrupos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+      );
       }
 
       if (loadingTipos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+      );
       }
 
 
 
 
      function handleSubmit() {
-
-        if (icon !== "" && tipo !== "" ) {
-            const reader = new FileReader();
+        setNameError("");
+        setMisionError("");
+        setVisionError("");
+        setDisponibleError("");
+        setIconError("");
+        setTipoError("");
+        if(name === ""){
+          setNameError("Por favor colocale un Nombre a la agrupacion");
+          return;
+        }
+        if(disponible === ""){
+          setDisponibleError("Por favor selecciona la disponibilidad");
+          return;
+        }
+        if(tipo === ""){
+          setTipoError("Por favor selecciona un Tipo");
+          return;
+        }
+        if(mision === ""){
+          setMisionError("Por favor colocale una Mision a la agrupacion");
+          return;
+        }
+        if(vision === ""){
+          setVisionError("Por favor colocale una Vision a la agrupacion");
+          return;
+        }
+        
+        try {
+          const reader = new FileReader();
             reader.onload = async function (event) {
                 const url = event.target.result;
                 const grupo_modificado = {
@@ -75,7 +119,7 @@ export default function EditarGrupo() {
                 disponible:disponible,
                 }
                 modificarGrupo(id, grupo_modificado);
-                alert("grupo modificado");
+                alert("grupo modificado con exito");
                 setName("");
                 setMision("");
                 setVision("");
@@ -83,6 +127,9 @@ export default function EditarGrupo() {
                 setTipo("");
             };
             reader.readAsDataURL(icon);
+            navigate("/Dashboard");
+        }catch (error) {
+          setIconError("Por favor selecciona un archivo valido");
         }
    
     }
@@ -95,75 +142,78 @@ export default function EditarGrupo() {
             {/**FORM */}
             <h1 >Editar grupo</h1>
             <div className={styles.div_inputs}>
-            <label htmlFor="nombre">Nombre:</label>
-            <input 
-                defaultValue={grupo.name}
-                type="text"
-                id="nombre"
-                placeholder="Nombre"
-                className={styles.inputBox}
-                onChange={(ev) => setName(ev.target.value)}
-                />
+                <TextField
+                    className={styles.inputBox}
+                    defaultValue={grupo.name}
+                    id="Nombre"
+                    label="Nombre"
+                    multiline
+                    onChange={(ev) => setName(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{nameError}</label>
+                <br />
+      
+                <TextField
+                  id="Disponibilidad"
+                  select
+                  label="Disponible?"
+                  defaultValue={grupo.disponible}
+                  onChange={(ev) => setDisponible(ev.target.value)}
+                >
+                    <MenuItem key="true" value={true}>
+                      Si
+                    </MenuItem>
+                    <MenuItem key="false" value={false}>
+                      No
+                    </MenuItem>
+                </TextField>
+                <label style={{color:"red",fontSize:"12px"}}>{disponibleError}</label>
+                <br />
+                <TextField
+                  id="Tipos"
+                  select
+                  label="Tipo"
+                  defaultValue={grupo.tipo}
+                  onChange={(ev) => setTipo(ev.target.value)}
+                >
+                  {tipos.map((type) => (
+                    <MenuItem key={type.nombre} value={type.nombre}>
+                      {type.nombre}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <label style={{color:"red",fontSize:"12px"}}>{tipoError}</label>
+                <br />
 
-                <label>
-                    ¿Disponible?
-                    <br />
-                    <input
-                    type="radio"
-                    name="agree"
-                    value={true}
-                    onChange={() => setDisponible(true)}
-                    
-                    />
-                    Sí
-                </label>
-                <label>
-                    <input
-                    type="radio"
-                    name="agree"
-                    value={false}
-                    onChange={() => setDisponible(false)}
-                    />
-                    No
-                </label>
-               
-            
+                <TextField
+                    className={styles.inputBox}
+                    defaultValue={grupo.mision}
+                    id="mision"
+                    label="Mision"
+                    multiline
+                    onChange={(ev) => setMision(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{misionError}</label>
+                <br />
 
-                <label htmlFor="Tipos">Tipos:</label>
-                <select defaultValue={grupo.tipo} className={styles.inputBox} name="Tipos" id="Tipos" onChange={(ev) => setTipo(ev.target.value)}>
-                {tipos.map((type) => (
-                        <option  value={type.nombre}>{type.nombre}</option>
-                        ))}
-                </select>
-                
-                <label htmlFor="mision">Mision:</label>
-                <input 
-                defaultValue={grupo.mision}
-                id="mision"
-                type="text" 
-                placeholder="Mision"
-                className={styles.inputBox}
-                onChange={(ev) => setMision(ev.target.value)}
-                />
-                
-
-               
-                <label htmlFor="vision">Vision:</label>
-                <input 
-                defaultValue={grupo.vision}
-                type="text" 
-                id="vision"
-                placeholder="Vision"
-                className={styles.inputBox}
-                onChange={(ev) => setVision(ev.target.value)}
-                />
+                <TextField
+                    className={styles.inputBox}
+                    defaultValue={grupo.vision}
+                    id="vision"
+                    label="Vision"
+                    multiline
+                    onChange={(ev) => setVision(ev.target.value)}
+                  />
+                <label style={{color:"red",fontSize:"12px"}}>{visionError}</label>
                 <br />
 
                 <label htmlFor="icon">Icon del grupo:</label>
-                <input type="file"
+                <input
+                type="file"
                 name="icon" 
                 id="icon" 
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
+                <label style={{color:"red",fontSize:"12px"}}>{iconError}</label>
                 <br />
                 
 

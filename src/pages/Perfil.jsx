@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Estudiante } from '../objetos/Estudiante';
 import GrupoName from '../components/GrupoName';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useGrupos } from "../hooks/grupos";
 import cargando from '../img/cargando.gif';
 import { auth } from '../firebase';
@@ -13,6 +13,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 export default function Perfil() {
   const {user,setUser} = useUser();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   //cada vez que el auth cambie pasara por aqui
   useEffect(() => {
@@ -23,7 +24,22 @@ export default function Perfil() {
       });
   }, []);
 
+  useEffect(() => {
+    if(user === null){
+      setLoading(true);
+    }
+    if(user !== null){
+      setLoading(false);
+    }
+  }, [user]);
 
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+        <img width="40%" height="20%" src={cargando}/>
+      </div>
+    );
+   }
 
   return (
     <div className={styles.div_principal}>

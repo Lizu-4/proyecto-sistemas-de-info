@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from "./Dashboard.module.css";
 import { deleteGrupo, modificarGrupo } from "../controllers/firestore/grupos";
 import { deleteTipo } from "../controllers/firestore/tipos";
+import cargando from '../img/cargando.gif';
 
 
 
@@ -92,11 +93,19 @@ export default function Dashboard() {
       // }
     
       if (loadingGrupos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+      );
       }
 
       if (loadingTipos) {
-        return <div>Cargando...</div>;
+        return (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" , height: "100vh"}}>
+            <img width="40%" height="20%" src={cargando}/>
+          </div>
+      );
       }
     
       return (
@@ -142,7 +151,7 @@ export default function Dashboard() {
                     <NavLink  key={`/EditarGrupo/${grupo.id}`}
                     to={`/EditarGrupo/${grupo.id}`}><i className="fa-solid fa-circle-minus" style={{color: "#e07800"}}></i></NavLink>
                       
-                      <i className="fa-solid fa-circle-xmark"  onClick={() => borrarGrupo(grupo.id)} style={{color: "#bd0000", marginLeft: "4px"}}></i>
+                      <i className="fa-solid fa-circle-xmark"  onClick={() => borrarGrupo(grupo.id)} style={{color: "#bd0000", marginLeft: "4px", cursor: "pointer"}}></i>
                     </div> 
                     
                     </div>
@@ -178,7 +187,7 @@ export default function Dashboard() {
                   </div>
                   <NavLink key={routes[12].path} to={routes[12].path} 
                   type="button" className="btn btn-success m-3" >
-                  Crear Grupo
+                  Crear Tipo
                   </NavLink>
 
                 <div className="d-flex flex-wrap p-3">
@@ -192,7 +201,7 @@ export default function Dashboard() {
                       </NavLink>
                     
                        
-                        <i className="fa-solid fa-circle-xmark"  onClick={() => borrarTipo(type.id)} style={{color: "#bd0000", marginLeft: "4px"}}></i>
+                        <i className="fa-solid fa-circle-xmark"  onClick={() => borrarTipo(type.id)} style={{color: "#bd0000", marginLeft: "4px", cursor: "pointer"}}></i>
                       </div>
                     </div>
                     
