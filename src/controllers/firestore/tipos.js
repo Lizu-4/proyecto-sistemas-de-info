@@ -9,7 +9,10 @@ export async function getTipos() {
 
         const  tiposDocs = await getDocs(colReference);
 
-        const  tipos =  tiposDocs.docs.map((doc) => doc.data());
+        const  tipos =  tiposDocs.docs.map((doc) => ({
+            ...doc.data(), id: doc.id,
+        })
+        );
         
         return  tipos;
 
@@ -68,12 +71,5 @@ export async function modificarTipo(id_tipo, Tipo_modificado){
     }
   }
 
-  export async function actualizarTipo(id,  Tipo_modificado){
-    try {
-      const  tiposCollection = collection(db,"tipos", id); 
-      await setDoc( tiposCollection, Tipo_modificado, {merge: true});
-    } catch (error) {
-      console.error("Error updating document: ", error);
-    }
-  }
+
 

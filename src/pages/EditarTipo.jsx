@@ -1,49 +1,31 @@
-import useTipos from "../hooks/useTipos";
+import { useTipo } from "../hooks/tipos";
 import { Link, NavLink } from "react-router-dom";
 import { routes } from "../constants/routes";
 import { useEffect, useState, useContext } from 'react';
-import { getTipoById } from "../controllers/firestore/tipos-services";
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
-import { createTipo, updateTipo } from "../controllers/firestore/tipos-services";
+import { modificarTipo } from "../controllers/firestore/tipos";
+import { useParams } from "react-router-dom";
 
 export default function EditarTipo() {
 
-    
+    const [loading, setLoading] = useState(true);
     const [nombre, setNombre] = useState("");
-    const [tipo, setTipo] = useState(null);
+    //const [tipo, setTipo] = useState(null);
 
     const { id } = useParams();
+    const tipo = useTipo(id);
 
     useEffect(() => {
-        async function get(id) {
-         //   setLoading(true);
-            const grupo = await getTipoById(id);
-          //  setLoading(false);
-            setNombre(tipo.nombre)
+        if (tipo) {
+          setLoading(false);
+        }
+        
+      }, [tipo]);
 
-
-            }
-            
-            getGrupo(id);
-
-        }, [id]);
-
-    const {
-        tipoStatus, agregarTipo, modificarBaseDeDatos
-
-    } = useTipos();
-
-    const tipos = tipoStatus.data;
-
-    if (
-        tipoStatus.status === "loading" ) {
-
+      if (loading) {
         return <div>Cargando...</div>;
-    } else if (
-        tipoStatus.status === "error" ) {
-        return <div>Error al cargar los datos</div>;
-    }
+      }
 
     async function handleSubmit() {
 
@@ -52,7 +34,7 @@ export default function EditarTipo() {
     const tipoActualizado = {
         nombre: nombre,
     }
-    updateTipo(id, tipoActualizado);
+    modificarTipo(id, tipoActualizado);
     alert("Tipo actualizado");
     }
 

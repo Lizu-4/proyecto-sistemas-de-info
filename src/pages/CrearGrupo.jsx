@@ -1,106 +1,51 @@
-import useTipos from "../hooks/useTipos";
-import useGrupos from "../hooks/useGrupos";
+import {useTipos} from "../hooks/tipos";
+import {useGrupos} from "../hooks/grupos";
 import { Link, NavLink } from "react-router-dom";
 import { routes } from "../constants/routes";
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
-import { createGrupo, updateGrupo, deleteGrupo } from "../controllers/firestore/grupos-services";
-import { crearGrupo} from '../controllers/auth';
+import { crearGrupo} from '../controllers/firestore/grupos';
 
 export default function CrearGrupo() {
 
     
+    const [loadingGrupos, setLoadingGrupos] = useState(true);
+    const [loadingTipos, setLoadingTipos] = useState(true);
     const [name, setName] = useState("");
     const [mision, setMision] = useState("");
     const [vision, setVision] = useState("");
     const [icon, setIcon] = useState("");
     const [tipo, setTipo] = useState("");
-    const [pictures, setPictures] = useState([]);
-    const [fotos, setFotos] = useState([]);
+    const [disponible, setDisponible] = useState(true);
 
-    const {
-        tipoStatus,
-    } = useTipos();
+    const tipos = useTipos();
 
-    const {
-        grupoStatus, agregarGrupo, modificarBaseDeDatos,
-    } = useGrupos();
-
-    const tipos = tipoStatus.data;
+    const grupos = useGrupos();
 
     
-    const grupos = grupoStatus.data;
-
-    
-    if (
-        tipoStatus.status === "loading" ) {
-
-        return <div>Cargando...</div>;
-    } else if (
-        tipoStatus.status === "error" ) {
-        return <div>Error al cargar los datos</div>;
-    }
-    
-    function handleICon(icon) {
-        console.log(icon);
-        console.log("prev");
-        if (icon !== "" ) {
-            var reader = new FileReader();
-            reader.onload = function (icon) {
-            console.log("aqui");
-            const url = icon.target.result;
-            setIcon(url);
-        };
+    useEffect(() => {
+        if (grupos) {
+          setLoadingGrupos(false);
+        }
         
-   //reader.readAsDataURL(icon);
-   setIcon(reader.readAsDataURL(icon));
-    console.log(icon);
-    console.log("listo");
-    }
-}
+      }, [grupos]);
 
-// async function handleIcon(icon) {
-//     console.log(icon);
-//     console.log("prev");
-    
-//     if (icon !== null && icon !== "") {
-//         const reader = new FileReader();
-    
-//         reader.onload = function (e) {
-//             const url = e.target.result;
-//             setIcon(url);
-//             console.log("asi salio");
-//             resolve(url);
-//         };
-//         console.log("fuera");
-//         console.log(icon);
-//         reader.readAsDataURL(icon);
-//         }
-//     }
+      useEffect(() => {
+        if (tipos) {
+          setLoadingTipos(false);
+        }
+        
+      }, [tipos]);
 
+      if (loadingGrupos) {
+        return <div>Cargando...</div>;
+      }
 
-    // function handlePictures(fotos) {
-    //     fotos.map((event) => {
-    //         const reader = new FileReader();
-    //         reader.onload = function (event) {
-    //             const url = event.target.result;
-    //             const fotos = [...pictures];
-    //             fotos.push(url);
-    //             setPictures(fotos);
-    //         };
-    //     })
-    // }
-        // function handlePictures(fotos) {
-        //     for (const file of fotos) {
-        //     const reader = new FileReader();
-        //     reader.onload = (event) => {
-        //         const url = event.target.result;
-        //         setPictures((prevPictures) => [...prevPictures, url]);
-        //     };
-        //     reader.readAsDataURL(file);
-        //     }
-        // }
+      if (loadingTipos) {
+        return <div>Cargando...</div>;
+      }
+
 
     async function handleSubmit() {
         if (icon !== "" ) {
@@ -114,21 +59,19 @@ export default function CrearGrupo() {
                 miembros: [],
                 mision:mision,
                 name:name,
-                pictures:"",
                 tipo: tipo,
                 vision:vision,
                 comentarios:[],
-                disponible:true
+                disponible:disponible
                 }
-                crearGrupo(grupo_modificado);
+               // crearGrupo(grupo_modificado);
+               console.log(grupo_modificado);
                 alert("grupo creado");
                 setName("");
                 setMision("");
                 setVision("");
                 setIcon("");
                 setTipo("");
-                setPictures([]);
-                setFotos([]);
             };
             reader.readAsDataURL(icon);
         }
@@ -150,7 +93,29 @@ export default function CrearGrupo() {
                 className={styles.inputBox}
                 onChange={(ev) => setName(ev.target.value)}
                 />
-               
+
+            <label>
+                    ¿Disponible?
+                    <br />
+                    <input
+                    type="radio"
+                    name="agree"
+                    value={true}
+                    onChange={(event) => setDisponible(true)}
+                    
+                    />
+                    Sí
+                </label>
+                <label>
+                    <input
+                    type="radio"
+                    name="agree"
+                    value={false}
+                    onChange={(event) => setDisponible(false)}
+                    />
+                    No
+                </label>
+                        
             
 
                 <label htmlFor="Tipos">Tipos:</label>
@@ -187,13 +152,6 @@ export default function CrearGrupo() {
                 id="icon" 
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
                 <br />
-                
-                <label htmlFor="pictures">Fotos:</label>
-                <input type="file"
-                multiple
-                name="pictures"
-                id="pictures"
-                onChange={(ev) => setPictures(ev.target.files)}/>
 
                 <button type="submit" onClick={handleSubmit}>Subir</button>
 

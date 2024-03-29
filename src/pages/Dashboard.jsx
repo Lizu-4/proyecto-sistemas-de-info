@@ -1,71 +1,102 @@
 
-import useTipos from "../hooks/useTipos";
-import useGrupos from "../hooks/useGrupos";
+
+import { useTipos } from "../hooks/tipos";
 import { Link, NavLink } from "react-router-dom";
 import { routes } from "../constants/routes";
+import { useGrupos } from "../hooks/grupos";
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./Dashboard.module.css";
-import { createGrupo, updateGrupo, deleteGrupo, getGrupos } from "../controllers/firestore/grupos-services";
-import { getTipos } from "../controllers/firestore/tipos-services"; 
+import { deleteGrupo, modificarGrupo } from "../controllers/firestore/grupos";
+import { deleteTipo } from "../controllers/firestore/tipos";
 
 
 
 export default function Dashboard() {
 
-  const [agrupaciones, setAgrupaciones] = useState([]);
-  const [types, setTiypes] = useState([]);
+  const [loadingGrupos, setLoadingGrupos] = useState(true);
+  const [loadingTipos, setLoadingTipos] = useState(true);
+  const [listaTipos, setListaTipos] = useState([]);
+  const [listaGrupos, setListaGrupos] = useState([]);
+
+  const agrupaciones = useGrupos();
+  const tipos = useTipos();
+  const grupos = useGrupos();
 
 
-  
-    const {
-        tipoStatus, 
-        eliminarTipo,
-      } = useTipos();
 
-      const {
-        grupoStatus, agregarGrupo, modificarBaseDeDatos, eliminarGrupo 
-      } = useGrupos();
-
-        useEffect(() => {
-          if (grupoStatus.status === "success")
-          setAgrupaciones(grupoStatus.data);
-        }, [grupoStatus]);
-
-        useEffect(() => {
-          if (tipoStatus.status === "success")
-          setTiypes(tipoStatus.data);
-        }, [tipoStatus]);
+      useEffect(() => {
+        if (agrupaciones) {
+          setLoadingGrupos(false);
+          setListaGrupos(grupos)
+        }
         
+      }, [agrupaciones]);
 
-      function borrarGrupo(id) {
-        console.log({id});
-        eliminarGrupo(id);
+      useEffect(() => {
+        if (tipos) {
+          setLoadingTipos(false);
+          setListaTipos(tipos);
+        }
+        
+      }, [tipos]);
+
+      function borrarGrupo(idGrupo) {
+        
+        deleteGrupo(idGrupo);
+        setListaGrupos(listaGrupos.filter((grupo) => grupo.id !== idGrupo));
       }
-
-      function borrarTipo(id) {
-        console.log({id});
-        eliminarTipo(id);
-      }
-    
-          
-      if (
-        grupoStatus.status === "loading" ) {
-
-          return <div>Cargando...</div>;
-      } else if (
-        grupoStatus.status === "error" ) {
-        return <div>Error al cargar los datos</div>;
-      }
-
       
-        if (
-            tipoStatus.status === "loading" ) {
 
-          return <div>Cargando...</div>;
-      } else if (
-        tipoStatus.status === "error" ) {
-        return <div>Error al cargar los datos</div>;
+      function borrarTipo(idTipo) {
+        console.log(idTipo);
+        deleteTipo(idTipo);
+        setListaTipos(listaTipos.filter((type) => type.id !== idTipo));
+      }
+
+      // function changeDisponible(grupo) {
+
+      //     console.log(grupo.disponible);
+      //     console.log(grupo);
+      //     if (grupo.disponible === true) {
+      //       const grupo_modificado = {
+      //         icon: grupo.icon,
+      //         miembros: grupo.miembros,
+      //         mision:grupo.mision,
+      //         name:grupo.name,
+      //         tipo: grupo.tipo,
+      //         vision:grupo.vision,
+      //         comentarios:grupo.comentarios,
+      //         disponible:false,
+      //         }
+      //         modificarGrupo(grupo.id, grupo_modificado);
+      //         console.log("post");
+      //         console.log(grupo);
+      //     } else if (grupo.disponible === false ) {
+      //       const grupo_modificado = {
+      //         icon: grupo.icon,
+      //         miembros: grupo.miembros,
+      //         mision:grupo.mision,
+      //         name:grupo.name,
+      //         tipo: grupo.tipo,
+      //         vision:grupo.vision,
+      //         comentarios:grupo.comentarios,
+      //         disponible:true,
+      //         }
+      //         modificarGrupo(grupo.id, grupo_modificado);
+      //         console.log("post");
+      //         console.log(grupo);
+      //     }
+          
+       
+      // }
+    
+      if (loadingGrupos) {
+        return <div>Cargando...</div>;
+      }
+
+      if (loadingTipos) {
+        return <div>Cargando...</div>;
       }
     
       return (
@@ -100,12 +131,13 @@ export default function Dashboard() {
 
 
                 <div className="d-flex flex-wrap mx-4">
-                {agrupaciones.map((grupo) => (
+                {listaGrupos.map((grupo) => (
                   <>
                   <div className="card text-center " style={{ width: '15rem', height: '10rem'}}>
                     <div className="card-header d-flex" style={{color: 'white', backgroundColor: '#000A62', justifyContent: 'space-between'}}>
                        <h5> {grupo.name}</h5>
                     <div>
+                      {grupo.disponible}
                      
                     <NavLink  key={`/EditarGrupo/${grupo.id}`}
                     to={`/EditarGrupo/${grupo.id}`}><i className="fa-solid fa-circle-minus" style={{color: "#e07800"}}></i></NavLink>
@@ -120,6 +152,19 @@ export default function Dashboard() {
                       <p className="card-text">
                         { grupo.miembros.length === 1 ? 'Miembro' : 'Miembros'}
                         </p>
+                        <div>
+                        {/* {grupo.disponible === true ?   
+                          <input type="checkbox" onClick={() => changeDisponible(grupo)} id="disponible" name="interest" value="disponible" checked  />
+                          :
+                          <input type="checkbox" onClick={() => changeDisponible(grupo)} id="disponible" name="interest" value="disponible"  />
+                          } */}
+                         {/* <input type="checkbox" onChange={() => changeDisponible(grupo)} id="disponible" defaultChecked={grupo.disponible} name="interest" value="disponible"   /> */}
+                          
+
+                      
+                        {/* <label for="disponible">Disponible</label> */}
+                      </div>
+                        
                     </div>
                   </div>
                   </>
@@ -131,13 +176,13 @@ export default function Dashboard() {
                 <div style={{width: "100%", marginLeft: "1rem"}}>
                   <h1>DASHBOARD DE TIPOS</h1>
                   </div>
-                  <NavLink key={routes[11].path} to={routes[11].path} 
+                  <NavLink key={routes[12].path} to={routes[12].path} 
                   type="button" className="btn btn-success m-3" >
                   Crear Grupo
                   </NavLink>
 
                 <div className="d-flex flex-wrap p-3">
-              {types.map((type) => (
+              {listaTipos.map((type) => (
                 <>
                   <div className="card text-center m-3" style={{ width: '15rem', height: '10rem', backgroundColor: '#000A62', color: 'white'}}>
                     <div className="card-header d-flex" style={{color: 'white', justifyContent: 'space-between'}}>

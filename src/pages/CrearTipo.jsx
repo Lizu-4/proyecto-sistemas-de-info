@@ -1,43 +1,39 @@
-import useTipos from "../hooks/useTipos";
+import { useTipos } from "../hooks/tipos";
 import { Link, NavLink } from "react-router-dom";
 import { routes } from "../constants/routes";
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
-import { createTipo } from "../controllers/firestore/tipos-services";
-export default function CrearGrupo() {
+import { crearTipo } from "../controllers/firestore/tipos";
+
+export default function CrearTipo() {
 
     
     const [nombre, setNombre] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    const {
-        tipoStatus, agregarTipo, modificarBaseDeDatos
 
-    } = useTipos();
+    const tipos = useTipos();
 
-    const tipos = tipoStatus.data;
+    useEffect(() => {
+        if (tipos) {
+          setLoading(false);
+        }
+        
+      }, [tipos]);
 
-    if (
-        tipoStatus.status === "loading" ) {
-
+    if (loading) {
         return <div>Cargando...</div>;
-    } else if (
-        tipoStatus.status === "error" ) {
-        return <div>Error al cargar los datos</div>;
-    }
+      }
 
     async function handleSubmit() {
-
-    console.log({nombre});
-
-    await createTipo(nombre);
-        if (agregarTipo){
-            agregarTipo(nombre);
-
-        }if (modificarBaseDeDatos){
-        modificarBaseDeDatos(nombre);
+        if (nombre !== "") {
+            const nuevoTipo = {
+                nombre:nombre,
+            }
+            crearTipo(nuevoTipo);
+            alert("Tipo creado");
         }
-        alert("Tipo creado");
     }
 
 

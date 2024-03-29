@@ -80,11 +80,11 @@ export const router = createBrowserRouter([
       },
       {
         path: routes[11].path,
-        element: <CrearTipo />,
+        element: <EditarTipo />,
       },
       {
         path: routes[12].path,
-        element: <EditarTipo />,
+        element: <CrearTipo />,
       }
     ],
   },

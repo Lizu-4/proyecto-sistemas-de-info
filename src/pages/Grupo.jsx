@@ -35,10 +35,10 @@ export default function Agrupacion(){
    const { id } = useParams();
    console.log(id);
    
-  const [loading, setLoading] = useState(true);
-  //const [grupo, setGrupo] = useState(null);
+
    const {user,setUser} = useUser();
    const [feedback,setFeedback] = useState();
+   const [loading, setLoading] = useState(true);
 
    const grupo = useGrupo(id);
  

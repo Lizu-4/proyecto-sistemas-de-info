@@ -1,88 +1,89 @@
-import useTipos from "../hooks/useTipos";
-import useGrupos from "../hooks/useGrupos";
+
 import { Link, NavLink, useParams } from "react-router-dom";
 import { routes } from "../constants/routes";
 import { useEffect, useState, useContext } from 'react';
-
-import { getGrupoById } from "../controllers/firestore/grupos-services";
+import {useTipo, useTipos} from "../hooks/tipos";
+import {useGrupos, useGrupo} from "../hooks/grupos";
 import { useNavigate } from 'react-router-dom';
 import styles from "./CrearGrupo.module.css";
-import { createGrupo, updateGrupo, deleteGrupo } from "../controllers/firestore/grupos-services";
+import { modificarGrupo } from "../controllers/firestore/grupos";
 
 export default function EditarGrupo() {
 
-    const [grupo, setGrupo] = useState(null);
+    const [loadingGrupos, setLoadingGrupos] = useState(true);
+    const [loadingTipos, setLoadingTipos] = useState(true);
     const [name, setName] = useState("");
     const [mision, setMision] = useState("");
     const [vision, setVision] = useState("");
     const [icon, setIcon] = useState("");
     const [tipo, setTipo] = useState("");
-    const [pictures, setPictures] = useState([]);
-    const [fotos, setFotos] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [disponible, setDisponible] = useState(true);
+
+    const tipos = useTipos();
 
 
     const { id } = useParams();
+    const grupo = useGrupo(id);
 
+
+        
     useEffect(() => {
-        async function getGrupo(id) {
-         //   setLoading(true);
-            const grupo = await getGrupoById(id);
-          //  setLoading(false);
-            setGrupo(grupo);
+        if (grupo) {
+          setLoadingGrupos(false);
             setName(grupo.name);
             setVision(grupo.vision);
             setMision(grupo.mision);
             setTipo(grupo.tipo);
             setIcon(grupo.icon);
 
+        }
+        
+      }, [grupo]);
 
-            }
-            
-            getGrupo(id);
+      useEffect(() => {
+        if (tipos) {
+          setLoadingTipos(false);
+        }
+        
+      }, [tipos]);
 
-        }, [id]);
-
-
-    const {
-        tipoStatus,
-    } = useTipos();
-
-    const navigate = useNavigate();
-
-    const {
-        grupoStatus, agregarGrupo, modificarBaseDeDatos,
-    } = useGrupos();
-
-    const tipos = tipoStatus.data;
-
-    
-    const grupos = grupoStatus.data;
-
-    
-    if (grupoStatus.status === "loading") {
+      if (loadingGrupos) {
         return <div>Cargando...</div>;
       }
 
-      if (tipoStatus.status === "loading") {
+      if (loadingTipos) {
         return <div>Cargando...</div>;
       }
+
+
 
 
      function handleSubmit() {
-   // handleIcon(icon);
-  //  handlePictures(fotos);
-    console.log({name, tipo, mision, vision, pictures, icon});
-    const grupoActualizado = {
-        name: name,
-        tipo: tipo,
-        mision: mision,
-        vision: vision,
-        pictures: pictures,
-        icon: icon
-    }
-    updateGrupo(grupo.id, grupoActualizado);
-    alert("grupo actualizado");
+
+        if (icon !== "" && tipo !== "" ) {
+            const reader = new FileReader();
+            reader.onload = async function (event) {
+                const url = event.target.result;
+                const grupo_modificado = {
+                icon: url,
+                miembros: grupo.miembros,
+                mision:mision,
+                name:name,
+                tipo: tipo,
+                vision:vision,
+                comentarios:grupo.comentarios,
+                disponible:disponible,
+                }
+                modificarGrupo(id, grupo_modificado);
+                alert("grupo modificado");
+                setName("");
+                setMision("");
+                setVision("");
+                setIcon("");
+                setTipo("");
+            };
+            reader.readAsDataURL(icon);
+        }
    
     }
 
@@ -98,11 +99,33 @@ export default function EditarGrupo() {
             <input 
                 defaultValue={grupo.name}
                 type="text"
-                id="nomnbre"
+                id="nombre"
                 placeholder="Nombre"
                 className={styles.inputBox}
                 onChange={(ev) => setName(ev.target.value)}
                 />
+
+                <label>
+                    ¿Disponible?
+                    <br />
+                    <input
+                    type="radio"
+                    name="agree"
+                    value={true}
+                    onChange={() => setDisponible(true)}
+                    
+                    />
+                    Sí
+                </label>
+                <label>
+                    <input
+                    type="radio"
+                    name="agree"
+                    value={false}
+                    onChange={() => setDisponible(false)}
+                    />
+                    No
+                </label>
                
             
 
@@ -136,19 +159,13 @@ export default function EditarGrupo() {
                 />
                 <br />
 
-                {/* <label htmlFor="icon">Icon del grupo:</label>
-                <input type="file" 
+                <label htmlFor="icon">Icon del grupo:</label>
+                <input type="file"
                 name="icon" 
                 id="icon" 
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
-                <br /> */}
+                <br />
                 
-                <label htmlFor="pictures">Fotos:</label>
-                <input type="file"
-                multiple
-                name="pictures"
-                id="pictures"
-                onChange={(ev) => setPictures(ev.target.files)}/>
 
                 <button type="submit" onClick={handleSubmit}>Subir</button>
 

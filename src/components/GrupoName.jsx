@@ -2,27 +2,24 @@
 import { Link, NavLink } from "react-router-dom";
 
 import { routes } from '../constants/routes';
-import { getGrupoById } from "../controllers/firestore/grupos-services";
+import { useGrupos, useGrupo } from "../hooks/grupos";
 import { useEffect, useState, useContext } from 'react';
 
 export default function GrupoName({id}) {
 
 
     const [loading, setLoading] = useState(true);
-    const [grupo, setGrupo] = useState(null);
+
+    const grupo = useGrupo(id);
   
   
     useEffect(() => {
-        async function getClub(id) {
-          setLoading(true);
-          const grupo = await getGrupoById(id);
-          setLoading(false);
-          console.log({ grupo });
-          setGrupo(grupo);
-        }
-    
-        getClub(id);
-      }, [id]);
+      if (grupo) {
+        setLoading(false);
+      }
+      
+    }, [grupo]);
+
   
     if (loading) {
       return <div>Cargando...</div>;
