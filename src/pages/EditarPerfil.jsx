@@ -136,8 +136,9 @@ export default function EditarPerfil(){
       }, []);
 
     return(
+      <div className={styles.div_editar}>
         <div className={styles.div_inputs}>
-        <p>Actualizar informacion:</p>
+        <h1 style={{textAlign: "center", marginBottom: "30px"}}>Actualizar informacion</h1>
         <div className={styles.inputs}>
           <input 
             type="text" 
@@ -179,6 +180,7 @@ export default function EditarPerfil(){
           <label className={styles.errorLabel}>{pictureError}</label>
         </div>
         <br />
+        </div>
       </div>
     );
 }

@@ -56,6 +56,7 @@ export default function UserProvider({ children }) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("sesion iniciada");
+        console.log(user);
         obtenerEstudiante(user);//esta funcion convertira el estado del user en el objeto estudiante que acaba de iniciar sesion
         obtenerAdministrador(user);
       } else {

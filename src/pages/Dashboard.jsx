@@ -10,6 +10,9 @@ import styles from "./Dashboard.module.css";
 import { deleteGrupo, modificarGrupo } from "../controllers/firestore/grupos";
 import { deleteTipo } from "../controllers/firestore/tipos";
 import cargando from '../img/cargando.gif';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -42,10 +45,16 @@ export default function Dashboard() {
         
       }, [tipos]);
 
-      function borrarGrupo(idGrupo) {
+      function borrarGrupo(idGrupo, agrupacion) {
+        console.log(agrupacion.miembros.length);
+        if (agrupacion.miembros.length < 1) {
+          deleteGrupo(idGrupo);
+          setListaGrupos(listaGrupos.filter((grupo) => grupo.id !== idGrupo));
+        }else{
+         // <Alert severity="error">No puedes eliminar un grupo con miembros.</Alert>
+         alert("no puedes eliminar un grupo con miembros")
+        }
         
-        deleteGrupo(idGrupo);
-        setListaGrupos(listaGrupos.filter((grupo) => grupo.id !== idGrupo));
       }
       
 
@@ -55,42 +64,6 @@ export default function Dashboard() {
         setListaTipos(listaTipos.filter((type) => type.id !== idTipo));
       }
 
-      // function changeDisponible(grupo) {
-
-      //     console.log(grupo.disponible);
-      //     console.log(grupo);
-      //     if (grupo.disponible === true) {
-      //       const grupo_modificado = {
-      //         icon: grupo.icon,
-      //         miembros: grupo.miembros,
-      //         mision:grupo.mision,
-      //         name:grupo.name,
-      //         tipo: grupo.tipo,
-      //         vision:grupo.vision,
-      //         comentarios:grupo.comentarios,
-      //         disponible:false,
-      //         }
-      //         modificarGrupo(grupo.id, grupo_modificado);
-      //         console.log("post");
-      //         console.log(grupo);
-      //     } else if (grupo.disponible === false ) {
-      //       const grupo_modificado = {
-      //         icon: grupo.icon,
-      //         miembros: grupo.miembros,
-      //         mision:grupo.mision,
-      //         name:grupo.name,
-      //         tipo: grupo.tipo,
-      //         vision:grupo.vision,
-      //         comentarios:grupo.comentarios,
-      //         disponible:true,
-      //         }
-      //         modificarGrupo(grupo.id, grupo_modificado);
-      //         console.log("post");
-      //         console.log(grupo);
-      //     }
-          
-       
-      // }
     
       if (loadingGrupos) {
         return (
@@ -109,7 +82,7 @@ export default function Dashboard() {
       }
     
       return (
-        <div className='container'>  
+        <div className={styles.div_principal}>  
         {/* style={{ backgroundColor: '#00000', color: 'white', hoverColor: 'white'}}  */}
       
           <div className="contenedor d-flex my-3" style={{ backgroundColor:"#EBEBEB"}}>
@@ -151,7 +124,7 @@ export default function Dashboard() {
                     <NavLink  key={`/EditarGrupo/${grupo.id}`}
                     to={`/EditarGrupo/${grupo.id}`}><i className="fa-solid fa-circle-minus" style={{color: "#e07800"}}></i></NavLink>
                       
-                      <i className="fa-solid fa-circle-xmark"  onClick={() => borrarGrupo(grupo.id)} style={{color: "#bd0000", marginLeft: "4px", cursor: "pointer"}}></i>
+                      <i className="fa-solid fa-circle-xmark"  onClick={() => borrarGrupo(grupo.id, grupo)} style={{color: "#bd0000", marginLeft: "4px", cursor: "pointer"}}></i>
                     </div> 
                     
                     </div>
@@ -162,16 +135,6 @@ export default function Dashboard() {
                         { grupo.miembros.length === 1 ? 'Miembro' : 'Miembros'}
                         </p>
                         <div>
-                        {/* {grupo.disponible === true ?   
-                          <input type="checkbox" onClick={() => changeDisponible(grupo)} id="disponible" name="interest" value="disponible" checked  />
-                          :
-                          <input type="checkbox" onClick={() => changeDisponible(grupo)} id="disponible" name="interest" value="disponible"  />
-                          } */}
-                         {/* <input type="checkbox" onChange={() => changeDisponible(grupo)} id="disponible" defaultChecked={grupo.disponible} name="interest" value="disponible"   /> */}
-                          
-
-                      
-                        {/* <label for="disponible">Disponible</label> */}
                       </div>
                         
                     </div>

@@ -2,13 +2,27 @@
   display: flex;
   flex-direction: column;
   margin: 3%;
+  font-weight: bolder;
+  -webkit-box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47); 
+box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47);
+  
+}
+
+.div_editar {
+  display: block;
+  flex-direction: column;
+  margin: 3%;
   padding: 2%;
   font-weight: bolder;
+  -webkit-box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47); 
+box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47);
+  
 }
 
 .parte_superior {
-  border: 2px solid lightgray;
+  /* border: 2px solid lightgray; */
   margin-left: 3%;
+  padding: 2%;
 }
 
 /* .primer_div_de_parte_superior{
@@ -32,7 +46,7 @@
   display: flex;
   flex-direction: column;
   font-size: 44px;
-  font-weight: bolder;
+  margin-top: -70px;
   justify-content: center;
   margin-left: 5%;
 }
@@ -55,6 +69,11 @@
     align-items: center;
   }
 
+  .parte_inferior {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .titleContainer {
     font-size: 32px;
     margin-top: 2%;
@@ -66,11 +85,34 @@
 }
 .button{
   border: none;
-  background: gray;
-  color: white;
+  background: #e5e8ff;
+  color: #000A62;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   height: 70%;
   font-size: 24px;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 10px;
+}
+
+
+.div_inputs{
+  align-items: center;
+  margin: 10px;
+
+}
+.errorLabel {
+  color: red;
+  font-size: 12px;
+}
+
+.inputBox {
+  height: 50%;
+  width: 100%;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
 }

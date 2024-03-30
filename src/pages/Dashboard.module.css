@@ -1,5 +1,11 @@
 
-       
+.div_principal {
+
+  -webkit-box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47); 
+box-shadow: -1px 2px 8px 1px rgba(0,0,0,0.47);
+margin: 3%;
+  
+}
           .nav {
             display: flex;
             align-items: center;

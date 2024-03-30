@@ -46,36 +46,43 @@ export default function Perfil() {
       {/* primer div */}
       <div className={styles.parte_superior}>
         <div className={styles.primer_div_de_parte_superior}>
-          <div>
+          <div className='d-flex'>
+            
             <img className={styles.avatar} src={user.picture} ></img>
-            {user instanceof Estudiante?
+            {/* {user instanceof Estudiante?
             <p style={{textAlign:"center", fontSize:"100%"}}>Estudiante</p>:
-            <p style={{textAlign:"center", fontSize:"100%"}}>Administrador</p>}
+            <p style={{textAlign:"center", fontSize:"100%"}}>Administrador</p>} */}
+            <div className={styles.titleContainer}>
+              {/* <p style={{color: "#4BC3B5"}}> {user instanceof Estudiante ? "Estudiante":"Administrador"}</p> */}
+              <p style={{fontSize:"60%", marginBottom:"0px", fontWeight: "bolder"}}> {user.name} </p>
+              <hr className='line' style={{margin: "2px"}}/>
+              <p style={{ fontSize: "30%"}}>{user.email}</p>
+              <p style={{ fontSize: "30%", marginTop: "-10px"}}> {user.number} </p>
+            </div>
+            <Link to="/EditarPerfil" style={{marginLeft:"auto"}}>
+            <i class="fa-solid fa-pen-to-square" style={{color: '#f68b3e', fontSize: '4rem'}}></i>
+            </Link>
           </div>
-          <div className={styles.titleContainer}>
-            {/* <p style={{color: "#4BC3B5"}}> {user instanceof Estudiante ? "Estudiante":"Administrador"}</p> */}
-            <p style={{fontSize:"60%"}}> {user.name} </p>
-            <p style={{ fontSize: "30%"}}>{user.email}</p>
-            <p style={{ fontSize: "30%"}}> {user.number} </p>
-          </div>
+         
         </div>
         <div className={styles.segundo_div_de_parte_superior}>
-        <Link to="/EditarPerfil">
-            <button className={styles.button}>Editar Perfil</button>
-        </Link>
+        
         </div>
       </div>
       {/* Parte inferior */}
-      <div>
+      <div className={styles.parte_inferior}>
       { user instanceof Estudiante ?
-        <div className="agrupaciones">  
-        <p style={{ fontSize: "25px", color: "#D175B7"}}>Miembro de: </p>   
+        <div className="agrupaciones" style={{backgroundColor: "#e0e3ff"}}>  
+        <div className='title' style={{backgroundColor: "#000A62", width: "100%"}}> 
+        <p style={{ fontSize: "25px", color: "white", marginLeft: "15px"}}>Agrupaciones </p>   </div>
         {user.agrupaciones.map((index) => (
           <GrupoName
           key={index}
           id={index}
           />
-            ))} </div> :  <p style={{ fontSize: "25px", color: "#D175B7"}}> ADMINISTRADOR </p>  }
+            ))} </div> : 
+             
+             <button type="button" className="btn btn-primary" style={{ backgroundColor: "#1C2C54", width: "100%", marginBottom: "-20px", marginTop: "5px"}}>ADMINISTRADOR</button> }
       </div>
     </div>
   );

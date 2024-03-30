@@ -14,7 +14,7 @@ export default function NavBar() {
      
 
       <header className={styles.header}>
-      <img className="logo" width="100px" height="40px"  src={logo} ></img>
+      <img className="logo" width="100px" height="40px"  src={logo} style={{marginRight: '2rem'}} ></img>
 
       {/* <nav className={styles.nav}>
         {routes.map((route) => (
@@ -139,6 +139,8 @@ export default function NavBar() {
     >
       {routes[2].name}
     </NavLink>
+
+    
     
     </nav>
       }
