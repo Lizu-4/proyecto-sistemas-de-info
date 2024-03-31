@@ -59,7 +59,6 @@ function buscarTipo(tipoNombre) {
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             {tipos?.map ((tipo) => (
               <>
-              {console.log(tipo)}
                <li><div class="dropdown-item" onClick={() => {buscarTipo(tipo.nombre)}}>{tipo.nombre}</div></li>
                </>
             ))}

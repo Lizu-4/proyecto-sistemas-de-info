@@ -185,10 +185,10 @@ export default function Agrupacion(){
         <div className='container'>
             <div className={styles.up}>
             
-                <div style={{width:"50%"}}>
-                  <img src={grupo.icon} style={{ width: "100%", height:"100%", objectFit: 'fill'}}/> 
+                <div style={{width:"50%", alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
+                  <img src={grupo.icon} style={{ width: "100%", height:"100%", maxWidth: "400px", maxHeight: "380px", objectFit: 'fill'}}/> 
                 </div>
-                <div style={{ fontSize: "65px",fontWeight: "bolder", marginLeft: "auto", marginRight: "auto"}}> 
+                <div style={{ fontSize: "65px",fontWeight: "bolder", marginLeft: "auto", marginRight: "auto", marginTop: "auto", marginBottom: "auto"}}> 
                   <p style={{textAlign: "center"}}>{grupo.name}</p>
                   <Divider style={{ borderBottom: '2px solid #000A62' }} orientation="horizontal" />
                   {user instanceof Estudiante ? 

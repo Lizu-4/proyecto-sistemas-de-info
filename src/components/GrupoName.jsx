@@ -33,11 +33,11 @@ export default function GrupoName({id}) {
     return (
       <>
 
-        <div className="card  mb-3 text-center p-2 m-4" style={{ width: '15rem', height: '15rem'}}>
+        <div className="card  mb-3 text-center p-2" style={{ width: '15rem', height: '15rem', margin: '10px'}}>
           <div className="card-header"> <h5 className="card-title" style={{color: 'black', fontWeight: '700', color: '#DD7A31'}}>{grupo.name}</h5></div>
             <div className="card-body">
             
-              <img src={grupo.icon} style={{objectFit: 'contain', width:'14rem', height: '12rem'}} />    
+              <img src={grupo.icon} style={{objectFit: 'scale-down', width:'12rem', height: '11rem'}} />    
           </div>
         </div>
           

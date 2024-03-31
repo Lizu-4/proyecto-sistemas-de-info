@@ -72,18 +72,24 @@ export default function Perfil() {
       {/* Parte inferior */}
       <div className={styles.parte_inferior}>
       { user instanceof Estudiante ?
-        <div className="agrupaciones" style={{backgroundColor: "#e0e3ff"}}>  
-        <div className='title' style={{backgroundColor: "#000A62", width: "100%"}}> 
-        <p style={{ fontSize: "25px", color: "white", marginLeft: "15px"}}>Agrupaciones </p>   </div>
-        {user.agrupaciones.map((index) => (
-          <GrupoName
-          key={index}
-          id={index}
-          />
-            ))} </div> : 
-             
-             <button type="button" className="btn btn-primary" style={{ backgroundColor: "#1C2C54", width: "100%", marginBottom: "-20px", marginTop: "5px"}}>ADMINISTRADOR</button> }
-      </div>
+        <div className="agrupaciones" style={{backgroundColor: "#f0f2ff"}}>  
+          <div className='title' style={{backgroundColor: "#000A62", width: "100%"}}> 
+            <p style={{ fontSize: "25px", color: "white", marginLeft: "15px", padding: "9px"}}>Agrupaciones </p>   
+          </div>
+          <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-start", borderRadius: "7px 7spx 0px 0px", marginLeft: "18px"}}>
+          {user.agrupaciones.map((index) => (
+              <GrupoName
+              key={index}
+              id={index}
+              />
+                ))} 
+          </div>
+
+           
+          </div> : 
+                
+              <button type="button" className="btn btn-primary" style={{ backgroundColor: "#1C2C54", width: "100%", marginBottom: "-20px", marginTop: "5px"}}>ADMINISTRADOR</button> }
+          </div>
     </div>
   );
 }
