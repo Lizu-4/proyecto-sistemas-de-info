@@ -54,8 +54,8 @@ export default function CrearTipo() {
         <div className={styles.div_principal}>
             <div style={{ margin:'2%' }}>
                 {/**FORM */}
-                <h1 >Crear Tipo</h1>
-                <div className={styles.div_inputs}>
+                <h1 style={{textAlign: "center", fontWeight: "bolder"}}>Crear Tipo</h1>
+                <div className={styles.div_inputs_editar}>
                 <TextField
                     className={styles.inputBox}
                     id="nomnbre"
@@ -66,7 +66,7 @@ export default function CrearTipo() {
                 <label style={{color:"red",fontSize:"12px"}}>{nameError}</label>
                 </div>
 
-                <button type="submit" onClick={handleSubmit}>Subir</button>
+                <button className={styles.button_editar} type="submit" onClick={handleSubmit}>Subir</button>
                 
             </div>
         </div>

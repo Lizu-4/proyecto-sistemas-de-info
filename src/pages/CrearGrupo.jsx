@@ -133,7 +133,7 @@ export default function CrearGrupo() {
         <div className={styles.div_principal}>
         <div style={{ margin:'2%' }}>
             {/**FORM */}
-            <h1 >Crear grupo</h1>
+            <h1 style={{textAlign: "center", fontWeight: "bolder"}}>Crear grupo</h1>
             <div className={styles.div_inputs}>
             <TextField
                     className={styles.inputBox}
@@ -204,7 +204,7 @@ export default function CrearGrupo() {
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
                 <label style={{color:"red",fontSize:"12px"}}>{iconError}</label>
                 <br />
-                <button type="submit" onClick={handleSubmit}>Crear Grupo</button>
+                <button className={styles.button_editar} type="submit" onClick={handleSubmit}>Crear Grupo</button>
 
             </div>
         </div>

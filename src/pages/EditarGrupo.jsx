@@ -140,7 +140,7 @@ export default function EditarGrupo() {
         <div className={styles.div_principal}>
         <div style={{ margin:'2%' }}>
             {/**FORM */}
-            <h1 >Editar grupo</h1>
+            <h1 style={{textAlign: "center", fontWeight: "bolder"}}>Editar grupo</h1>
             <div className={styles.div_inputs}>
                 <TextField
                     className={styles.inputBox}
@@ -155,6 +155,7 @@ export default function EditarGrupo() {
       
                 <TextField
                   id="Disponibilidad"
+                  className={styles.inputBox}
                   select
                   label="Disponible?"
                   defaultValue={grupo.disponible}
@@ -171,6 +172,7 @@ export default function EditarGrupo() {
                 <br />
                 <TextField
                   id="Tipos"
+                  className={styles.inputBox}
                   select
                   label="Tipo"
                   defaultValue={grupo.tipo}
@@ -217,7 +219,7 @@ export default function EditarGrupo() {
                 <br />
                 
 
-                <button type="submit" onClick={handleSubmit}>Subir</button>
+                <button className={styles.button_editar} type="submit" onClick={handleSubmit}>Subir</button>
 
             </div>
         </div>

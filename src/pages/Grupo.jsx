@@ -151,14 +151,21 @@ export default function Agrupacion(){
       document.getElementById("input_agregar_feedback").value = "";
       return;
     }
-    if(feedback === ""){
+    if(!(user instanceof Administrador) && !(user instanceof Estudiante)){
+      alert("Si no tienes una cuenta no puedes agregar feedbacks");
+      setFeedback("");
+      document.getElementById("input_agregar_feedback").value = "";
+      return;
+    }
+    if(document.getElementById("input_agregar_feedback").value === ""){
       alert("Debes colocar algun comentario");
     }else if(user.agrupaciones.includes(grupo.id) === false){
       alert("Solo los miembros pueden agregar un feedback");
     }else{
       const nuevo_comentario = {
         name: user.name,
-        comentario: feedback
+        comentario: feedback,
+        picture:user.picture
       }
       const comentariosActualizados = [...grupo.comentarios, nuevo_comentario];
       const nuevo_grupo = new Grupo(grupo.id,grupo.name,grupo.tipo,grupo.mision,grupo.vision,grupo.miembros, grupo.icon,comentariosActualizados,grupo.disponible);
@@ -247,7 +254,7 @@ export default function Agrupacion(){
                           <ul>
                           <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                              <Avatar style={{ backgroundColor: getRandomColor() }}>{miembro.name.charAt(0).toUpperCase()}</Avatar>
+                            <Avatar style={{ backgroundSize: 'cover', justifyContent: 'center', backgroundImage: `url(${miembro.picture})`, color: 'transparent' }}></Avatar>
                             </ListItemAvatar>
                             <ListItemText style={{color:"black"}}
                               primary={miembro.name}
@@ -298,7 +305,7 @@ export default function Agrupacion(){
                     <ul>
                     <ListItem alignItems="flex-start">
                       <ListItemAvatar>
-                        <Avatar style={{ backgroundColor: getRandomColor() }}>{miembro.name.charAt(0).toUpperCase()}</Avatar>
+                      <Avatar style={{ backgroundSize: 'cover', justifyContent: 'center', backgroundImage: `url(${miembro.picture})`, color: 'transparent' }}></Avatar>
                       </ListItemAvatar>
                       <ListItemText style={{color:"black"}}
                         primary={miembro.name}
