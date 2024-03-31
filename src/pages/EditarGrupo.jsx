@@ -212,6 +212,7 @@ export default function EditarGrupo() {
                 <label htmlFor="icon">Icon del grupo:</label>
                 <input
                 type="file"
+                accept="image/*"
                 name="icon" 
                 id="icon" 
                 onChange={(ev) => setIcon(ev.target.files[0])}/>
