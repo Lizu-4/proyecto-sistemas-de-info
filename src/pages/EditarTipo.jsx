@@ -56,7 +56,7 @@ export default function EditarTipo() {
         <div className={styles.div_principal}>
             <div style={{ margin:'2%' }}>
                 {/**FORM */}
-                <h1 >Editar Tipo</h1>
+                <h1 style={{textAlign: "center", fontWeight: "bolder"}}>Editar Tipo</h1>
                 <div className={styles.div_inputs}>
                 <TextField
                     className={styles.inputBox}
@@ -67,7 +67,7 @@ export default function EditarTipo() {
                   />
                 <label style={{color:"red",fontSize:"12px"}}>{nameError}</label>
 
-                <button type="submit" onClick={handleSubmit}>Subir</button>
+                <button className={styles.button_editar} type="submit" onClick={handleSubmit}>Subir</button>
                 </div>
             </div>
         </div>
