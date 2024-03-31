@@ -1,93 +1,38 @@
-.container {
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-  
-  header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #000A62;
-    color: white;
-    padding: 20px;
-  }
-  .headerr {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #000A62;
-    color: white;
-    padding: 20px;
-  }
-  .img {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    margin-bottom: 20px;
-   
-    padding: 20px;
-  }
-  .missionImage {
-    float: right; 
-    margin-left: 20px; 
-    width: 300px; 
-    height: auto; 
-  }
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: black;
-  }
-  .titlee {
-    font-size: 24px;
-    font-weight: bold;
-    color: white; 
-  }
-  section {
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: white; 
+.header {
+  background-image: url('https://www.unimet.edu.ve/wp-content/uploads/2023/12/FOTOS-CAMPUS-2023-24-1-1024x683.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
+}
 
-  }
-  .sectionn {
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: white; 
+.content{
+  background-image: linear-gradient(to left, rgba(0, 10, 98, 0), rgb(0, 10, 98));
+  height: 100%;
+  color: white;
+  padding: 3rem;
+}
 
-  }
-  sectionnn{
-    margin-bottom: 20px;
-    padding: 20px;
-  }
+.pics{
+  display: flex;
+  height: 242px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-  .h1 {
-    color: black; 
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .p {
-    color: black; 
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  .p1 {
-    color: white;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  .btnOrange {
-    background-color: orange;
-    color: white;
-  }
-  
-  .main {
-    padding: 20px;
-  }
+.pic{
+  /* max-width: 370px;
+  max-height: 242px; */
+  height: 242px;
+  margin: 2px;
+  object-fit: cover;
+}
 
-  
-  .mission-image {
-    flex: 0 0 40%;
-    padding-left: 40px;
-  }
-  
+.baner{
+  display: flex;
+  width: 100%;
+  margin: 3px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+ 
+}
