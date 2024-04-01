@@ -84,8 +84,8 @@ export default function Ingresar() {
 
     return (
     <div className={styles.div_principal}>
-        <div>{/**PARTE IZQUIERDA(IMAGEN) */}
-            <img width="100%" height="100%"  src={img} style={{ objectFit: 'fill'}}></img>
+        <div style={{width:"100%"}}>{/**PARTE IZQUIERDA(IMAGEN) */}
+            <img width="100%" height="100%"  src={img} style={{ objectFit: 'cover'}}></img>
         </div>
         <div style={{ margin:'8%' }}>{/**PARTE DERECHA */}
             {/**ENCABEZADO */}
