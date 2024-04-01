@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTipos, getTipoById } from "../controllers/firestore/tipos";
-
+// Hook para obtener todos los tipos
 export function useTipos() {
     const [tipos, setTipos] = useState(null);
 
@@ -13,7 +13,7 @@ export function useTipos() {
     }, []);
     return tipos;
 }
-
+// Hook para obtener un tipo por su ID
 export function useTipo(id) {
     const [tipo, setTipo] = useState(null);
 

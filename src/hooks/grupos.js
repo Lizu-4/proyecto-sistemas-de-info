@@ -1,3 +1,4 @@
+// Hook para obtener todos los grupos académicos
 import { useEffect, useState } from "react";
 import { getGrupos, getGrupoById } from "../controllers/firestore/grupos";
 
@@ -14,7 +15,7 @@ export function useGrupos() {
     }, []);
     return grupos;
 }
-
+// Hook para obtener un grupo académico por su ID
 export function useGrupo(id) {
     const [grupo, setGrupo] = useState(null);
 
