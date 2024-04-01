@@ -10,3 +10,4 @@ export function Grupo(id,name,tipo,mision,vision,miembros, icon, comentarios,dis
     this.disponible = disponible;
 }
 
+// Grupos 
